@@ -7,17 +7,31 @@ form = cgi.FieldStorage()
 number = form.getvalue('input')
 
 
-
+# Form for input
 print("<form method = 'post' ")
 print("<p>Input: <input type='text' name='input' /></p>") 
 print("<input type='submit' value='Submit' />") 
 print("</form>  ")
 
-f = open('data.txt', 'a+')
-f.write(number)
-f.write("<br>")
-f.close()
+# Check number is not alphabet
+try:
+	int(number)
+	isNumber = True
+	str(number)
+except:
+	isNumber = False
+	
+# Add text in file
+if (isNumber == True):
+	# Write if number is not alphabet
+	f = open('data.txt', 'a+')
+	f.write(number)
+	f.write("<br>")
+	f.close()
+elif (number != None):
+	print("<h1>"+"Please enter only number!"+"</h1><br>")  # Show when enter alphabet
 
+# Read file to web page
 r = open('data.txt', 'r')
 s = r.read()
 print("In File:")

@@ -16,7 +16,7 @@ if form.getvalue("sad"):
     print("<p> Oh no! Why are you sad? </p>") 
   
 # Using HTML input and forms method 
-print("<form method='post' action='hello2.py'>") 
+print("<form method='post' ") 
 print("<p>Name: <input type='text' name='name' /></p>") 
 print("<input type='checkbox' name='happy' /> Happy") 
 print("<input type='checkbox' name='sad' /> Sad") 
