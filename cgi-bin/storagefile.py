@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import cgi, cgitb 
+import time
 print("Content-type: text/html\r\n\r\n") 
 print("<html><body>")
 
@@ -25,7 +26,8 @@ except:
 if (isNumber == True):
 	# Write if number is not alphabet
 	f = open('data.txt', 'a+')
-	f.write(number)
+	f.write(number)  # Add number
+	f.write(" at "+ time.ctime())  # Add time
 	f.write("<br>")
 	f.close()
 elif (number != None):
