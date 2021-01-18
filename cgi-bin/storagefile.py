@@ -46,14 +46,14 @@ for i in readed:
 print("In File:")
 print("<table>")
 print("<tr>")
-print("<th>Templature(C)</th>")
 print("<th>Date</th>")
+print("<th>Templature(C)</th>")
 print("</tr>")
 
 for i in range(len(role)):
 	print("<tr>")
-	print("<td>"+role[i]+"</td>")
 	print("<td>>"+date[i]+"</t1d>")
+	print("<td>"+role[i]+"</td>")
 	print("</tr>")
 
 
