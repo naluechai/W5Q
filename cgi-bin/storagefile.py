@@ -9,16 +9,15 @@ print("<body>")
 form = cgi.FieldStorage() 
 number_input = form.getvalue('number_message')
 
-
 # Form for input
 print("<form method = 'post' ")
 print("<p>Input Number: <input type='text' name='number_message'/></p>") 
 print("<input type='submit' value='Enter' />") 
-print("</form>  ")
+print("</form>")
 
 # Check number is not alphabet
 try:
-	int(number_input)
+	float(number_input)
 	isNumber = True
 	str(number_input)
 except:
@@ -27,22 +26,22 @@ except:
 # Add text in file
 if (isNumber == True):	
 		# Write if number is not alphabet
-		f = open('data.txt', 'a+')
+		f = open('data.txt','a+')
 		f.write(number_input)  # Add number
-		f.write("  "+ time.ctime())  # Add time
-		f.write("<br>")
+		f.write("    "+ time.ctime())  # Add time
+		#f.write("<br>")
 		f.write("\n")
 		f.close()
 elif (number_input != None):
 	print("<h1>"+"Please enter only number!"+"</h1><br>")  # Show when enter alphabet
 
 # Read file to web page
-readed = open('data.txt', 'r')
-temp=[]#list of templature
+readed = open('data.txt','r')
+role=[]#list of templature
 date=[]#list of date
 for i in readed:
-    temp.append(i[0:3])
-    date.append(i[3:-5])
+    role.append(i[0:5])
+    date.append(i[5:-5])
 
 print("In File:")
 print("<table>")
@@ -51,9 +50,9 @@ print("<th>Templature(C)</th>")
 print("<th>Date</th>")
 print("</tr>")
 
-for i in range(len(temp)):
+for i in range(len(role)):
 	print("<tr>")
-	print("<td>"+temp[i]+"</td>")
+	print("<td>"+role[i]+"</td>")
 	print("<td>>"+date[i]+"</t1d>")
 	print("</tr>")
 
