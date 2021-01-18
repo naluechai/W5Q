@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import cgi, cgitb 
 import time
+import random
 print("Content-type: text/html\r\n\r\n") 
 print("<html><head><style>")
 print("td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}")
@@ -49,6 +50,7 @@ print("<tr>")
 print("<th>Date</th>")
 print("<th>Templature(C)</th>")
 print("</tr>")
+print("<tr>"+"<td>>"+str(random.randrange(0,10))+"</t1d>" + "<td>"+str(random.randrange(0,10))+"</td>"+"</tr>")  # test random
 
 for i in range(len(role)):
 	print("<tr>")
