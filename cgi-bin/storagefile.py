@@ -2,6 +2,10 @@
 import cgi, cgitb 
 import time
 import random
+
+def get_temp(data):
+	return float(data[0:5])
+
 print("Content-type: text/html\r\n\r\n") 
 print("<html><head><style>")
 print("td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}")
@@ -40,9 +44,15 @@ elif (number_input != None):
 readed = open('data.txt','r')
 role=[]#list of templature
 date=[]#list of date
+temp = []
 for i in readed:
-    role.append(i[0:5])
+	temp.append(i)
+temp.sort(key=get_temp,reverse=True)
+
+for i in temp:
+    role.append(float(i[0:5]))
     date.append(i[5:-5])
+
 
 print("In File:")
 print("<table>")
@@ -55,7 +65,7 @@ print("<tr>"+"<td>>"+str(random.randrange(0,10))+"</t1d>" + "<td>"+str(random.ra
 for i in range(len(role)):
 	print("<tr>")
 	print("<td>>"+date[i]+"</t1d>")
-	print("<td>"+role[i]+"</td>")
+	print("<td>"+str(role[i])+"</td>")
 	print("</tr>")
 
 
