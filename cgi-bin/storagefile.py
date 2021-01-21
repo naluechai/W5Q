@@ -2,6 +2,7 @@
 import cgi, cgitb 
 import time
 import random
+import csv
 
 def get_temp(data):
 	return float(data[0:5])
@@ -26,7 +27,7 @@ def add_temperature_in_file():
 	try:
 		# Check number is not alphabet
 		float(number_input)
-		writeData = open('data.txt','a+')
+		writeData = open(file_name,'a+')
 		writeData.write(str(number_input))  # Add number
 		writeData.write("    "+ time.ctime())  # Add time
 		writeData.write("\n")
@@ -48,8 +49,11 @@ def read_temperature_file():
 	for i in rawData:#seperate sorted data to 2 list
 	    temperatureList.append(float(i[0:5]))
 	    dateList.append(i[5:-5])
-	    
-	print("In File:")
+	
+	print("Last update: "+time.ctime())    
+	print("<br>")
+	print("In File")
+
 	
 	# Show table
 	print("<table>")
@@ -71,12 +75,12 @@ def tail_HTML():
 # Decalre varible
 form = cgi.FieldStorage() 
 number_input = form.getvalue('number_message')
+file_name = 'data.txt'
 
 head_HTML()
 temperature_input_form()  # Input form
-file_name = 'data.txt'
-add_temperature_in_file()  # Write input in file
-read_temperature_file()  # Read file
+add_temperature_in_file()  # Write input in txt file
+read_temperature_file()  # Read txt file
 tail_HTML()
 
 
