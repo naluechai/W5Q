@@ -23,21 +23,13 @@ print("</form>")
 # Check number is not alphabet
 try:
 	float(number_input)
-	isNumber = True
-	str(number_input)
-except:
-	isNumber = False
-	
-# Add text in file
-if (isNumber == True):	
-		# Write if number is not alphabet
-		f = open('data.txt','a+')
-		f.write(number_input)  # Add number
-		f.write("    "+ time.ctime())  # Add time
-		#f.write("<br>")
-		f.write("\n")
-		f.close()
-elif (number_input != None):
+	f = open('data.txt','a+')
+	f.write(str(number_input))  # Add number
+	f.write("    "+ time.ctime())  # Add time
+	#f.write("<br>")
+	f.write("\n")
+	f.close()
+except:	
 	print("<h1>"+"Please enter only number!"+"</h1><br>")  # Show when enter alphabet
 
 # Read file to web page
