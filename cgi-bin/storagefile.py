@@ -26,36 +26,28 @@ def add_temperature_in_file():
 	try:
 		# Check number is not alphabet
 		float(number_input)
-		isNumber = True
-		str(number_input)
-	except:
-		isNumber = False
-		
-	# Add text in file
-	if (isNumber == True):	
-			# Write if number is not alphabet
-			f = open(file_name,'a+')
-			f.write(number_input)  # Add number
-			f.write("    "+ time.ctime())  # Add time
-			#f.write("<br>")
-			f.write("\n")
-			f.close()
-	elif (number_input != None):
+		writeData = open('data.txt','a+')
+		writeData.write(str(number_input))  # Add number
+		writeData.write("    "+ time.ctime())  # Add time
+		writeData.write("\n")
+		writeData.close()
+	except:	
 		print("<h1>"+"Please enter only number!"+"</h1><br>")  # Show when enter alphabet
 
 def read_temperature_file():
 	# Read file to web page
-	readed = open(file_name,'r')
-	role=[]#list of templature
-	date=[]#list of date
-	temp = []
-	for i in readed:
-		temp.append(i)
-	temp.sort(key=get_temp,reverse=True)
+	readData = open(file_name,'r')
+	temperatureList=[]#list of temperature
+	dateList=[]#list of date
+	rawData = []#list to collect raw data
+	for i in readData:#assign data to list 
+		rawData.append(i)
+	readData.close()
+	rawData.sort(key=get_temp,reverse=True)#sort data Max to min number temperature
 
-	for i in temp:
-	    role.append(float(i[0:5]))
-	    date.append(i[5:-5])
+	for i in rawData:#seperate sorted data to 2 list
+	    temperatureList.append(float(i[0:5]))
+	    dateList.append(i[5:-5])
 	    
 	print("In File:")
 	
@@ -65,16 +57,13 @@ def read_temperature_file():
 	print("<th>Date</th>")
 	print("<th>Templature(C)</th>")
 	print("</tr>")
-	print("<tr>"+"<td>>"+str(random.randrange(0,10))+"</t1d>" + "<td>"+str(random.randrange(0,10))+"</td>"+"</tr>")  # test random
-
-	for i in range(len(role)):
+	#loop show data 
+	for i in range(len(temperatureList)):
 		print("<tr>")
-		print("<td>>"+date[i]+"</t1d>")
-		print("<td>"+str(role[i])+"</td>")
+		print("<td>>"+dateList[i]+"</t1d>")
+		print("<td>"+str(temperatureList[i])+"</td>")
 		print("</tr>")
-		
 	print("</table>")
-	readed.close()
 
 def tail_HTML():
 	print("</body></html>") 
