@@ -6,6 +6,9 @@ import csv
 
 def get_temp(data):
 	return float(data[0:5])
+	
+def get_temp_csv(data):
+	return float(data[0])
 
 def head_HTML():
 	print("Content-type: text/html\r\n\r\n") 
@@ -72,6 +75,35 @@ def read_temperature_file():
 def tail_HTML():
 	print("</body></html>") 
 
+def read_csv_file():
+	temperatureList=[]  # list of temperature
+	dateList=[]  # list of date
+	rawData = []  # list to collect raw data
+	
+	with open('data.csv') as csvfile:
+		reader = csv.reader(csvfile)
+		for row in reader:
+			rawData.append(row)
+		rawData.sort(key=get_temp_csv,reverse=True)  # sort data Max to min number temperature
+
+		for temp, date in rawData:  # seperate sorted data to 2 list
+		    temperatureList.append(float(temp))
+		    dateList.append(date)
+	
+	# Show table
+	print("<table>")
+	print("<tr>")
+	print("<th>Date</th>")
+	print("<th>Templature(C)</th>")
+	print("</tr>")
+	#loop show data 
+	for i in range(len(temperatureList)):
+		print("<tr>")
+		print("<td>>"+dateList[i]+"</t1d>")
+		print("<td>"+str(temperatureList[i])+"</td>")
+		print("</tr>")
+	print("</table>")
+
 # Decalre varible
 form = cgi.FieldStorage() 
 number_input = form.getvalue('number_message')
@@ -80,7 +112,8 @@ file_name = 'data.txt'
 head_HTML()
 temperature_input_form()  # Input form
 add_temperature_in_file()  # Write input in txt file
-read_temperature_file()  # Read txt file
+# read_temperature_file()  # Read txt file
+read_csv_file()  # Read csv file
 tail_HTML()
 
 
