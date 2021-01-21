@@ -13,37 +13,47 @@ def head_HTML():
 	print("</style></head>")
 	print("<body>")
 
-	
+def temperature_input_form():
+	# Form for temperature input
+	print("<form method = 'post' ")
+	print("<input type='submit' value='Enter' />") 
+	print("<p>Input Number: <input type='text' name='number_message'/></p>") 
+	print("<input type='submit' value='Enter' />") 
+	print("</form>")
+
+def add_temperature_in_file():
+	# Add text if is not a alphabet
+	try:
+		# Check number is not alphabet
+		float(number_input)
+		isNumber = True
+		str(number_input)
+	except:
+		isNumber = False
+		
+	# Add text in file
+	if (isNumber == True):	
+			# Write if number is not alphabet
+			f = open('data.txt','a+')
+			f.write(number_input)  # Add number
+			f.write("    "+ time.ctime())  # Add time
+			#f.write("<br>")
+			f.write("\n")
+			f.close()
+	elif (number_input != None):
+		print("<h1>"+"Please enter only number!"+"</h1><br>")  # Show when enter alphabet
+
+
+# Decalre varible
 form = cgi.FieldStorage() 
 number_input = form.getvalue('number_message')
+
 head_HTML()
+temperature_input_form()  # Input form
+add_temperature_in_file()  # Write input in file
 
-# Form for input
-print("<form method = 'post' ")
-print("<input type='submit' value='Enter' />") 
-print("<p>Input Number: <input type='text' name='number_message'/></p>") 
-print("<input type='submit' value='Enter' />") 
-print("</form>")
 
-# Check number is not alphabet
-try:
-	float(number_input)
-	isNumber = True
-	str(number_input)
-except:
-	isNumber = False
-	
-# Add text in file
-if (isNumber == True):	
-		# Write if number is not alphabet
-		f = open('data.txt','a+')
-		f.write(number_input)  # Add number
-		f.write("    "+ time.ctime())  # Add time
-		#f.write("<br>")
-		f.write("\n")
-		f.close()
-elif (number_input != None):
-	print("<h1>"+"Please enter only number!"+"</h1><br>")  # Show when enter alphabet
+
 
 # Read file to web page
 readed = open('data.txt','r')
