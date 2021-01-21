@@ -25,6 +25,26 @@ def temperature_input_form():
 	print("<input type='submit' value='Enter' />") 
 	print("</form>")
 
+def show_table(tempList,dateList):
+	# Print table on html form
+	print("Last update: "+time.ctime())    
+	print("<br>")
+	print("In File:")
+	
+	# Show table
+	print("<table>")
+	print("<tr>")
+	print("<th>Date</th>")
+	print("<th>Templature(C)</th>")
+	print("</tr>")
+	#loop show data 
+	for i in range(len(tempList)):
+		print("<tr>")
+		print("<td>>"+dateList[i]+"</t1d>")
+		print("<td>"+str(tempList[i])+"</td>")
+		print("</tr>")
+	print("</table>")
+
 def add_temperature_in_file():
 	# Add text if is not a alphabet
 	try:
@@ -53,23 +73,7 @@ def read_temperature_file():
 	    temperatureList.append(float(i[0:5]))
 	    dateList.append(i[5:-5])
 	
-	print("Last update: "+time.ctime())    
-	print("<br>")
-	print("In File:")
-	
-	# Show table
-	print("<table>")
-	print("<tr>")
-	print("<th>Date</th>")
-	print("<th>Templature(C)</th>")
-	print("</tr>")
-	#loop show data 
-	for i in range(len(temperatureList)):
-		print("<tr>")
-		print("<td>>"+dateList[i]+"</t1d>")
-		print("<td>"+str(temperatureList[i])+"</td>")
-		print("</tr>")
-	print("</table>")
+	show_table(temperatureList,dateList)  # Print table on html form
 
 def tail_HTML():
 	print("</body></html>") 
@@ -89,22 +93,7 @@ def read_csv_file():
 		    temperatureList.append(float(temp))
 		    dateList.append(date)
 		    
-	print("Last update: "+time.ctime())    
-	print("<br>")
-	print("In File:")
-	# Show table	
-	print("<table>")
-	print("<tr>")
-	print("<th>Date</th>")
-	print("<th>Templature(C)</th>")
-	print("</tr>")
-	#loop show data 
-	for i in range(len(temperatureList)):
-		print("<tr>")
-		print("<td>>"+dateList[i]+"</t1d>")
-		print("<td>"+str(temperatureList[i])+"</td>")
-		print("</tr>")
-	print("</table>")
+	show_table(temperatureList,dateList)  # Print table on html form
 
 def add_temperature_in_csv_file():
 	# Add text if is not a alphabet
