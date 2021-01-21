@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import cgi, cgitb 
+import cgi, cgitb ,timeit
 print("Content-type: text/html\r\n\r\n") 
 print("<html><head><style>")
 print("td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}")
@@ -18,12 +18,18 @@ def factorial(n):
         fac *= (i+1)
     print(fac)
 if number_input != None:
+    print('<p>result</p>')
+    print('<p>')
     try:
         num = int(number_input)
     except:
         print('please enter a number')
     if num >= 0:
+        start = timeit.default_timer()
         factorial(num)
+        stop = timeit.default_timer()
     else:
         print('negative factorial not define')
+    print('</p><hr>')
+    print('<p>',num,'! using',stop-start,'second </p>')
 print("</body></html>") 
