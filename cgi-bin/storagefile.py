@@ -56,8 +56,10 @@ def read_temperature_file():
 	for i in temp:
 	    role.append(float(i[0:5]))
 	    date.append(i[5:-5])
-
+	    
 	print("In File:")
+	
+	# Show table
 	print("<table>")
 	print("<tr>")
 	print("<th>Date</th>")
@@ -70,7 +72,12 @@ def read_temperature_file():
 		print("<td>>"+date[i]+"</t1d>")
 		print("<td>"+str(role[i])+"</td>")
 		print("</tr>")
+		
+	print("</table>")
 	readed.close()
+
+def tail_HTML():
+	print("</body></html>") 
 
 # Decalre varible
 form = cgi.FieldStorage() 
@@ -81,13 +88,14 @@ temperature_input_form()  # Input form
 file_name = 'data.txt'
 add_temperature_in_file()  # Write input in file
 read_temperature_file()  # Read file
+tail_HTML()
 
 
 
 
 
-print("</table>")
-print("</body></html>") 
+
+
 
 
 
