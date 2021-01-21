@@ -34,7 +34,7 @@ def add_temperature_in_file():
 	# Add text in file
 	if (isNumber == True):	
 			# Write if number is not alphabet
-			f = open('data.txt','a+')
+			f = open(file_name,'a+')
 			f.write(number_input)  # Add number
 			f.write("    "+ time.ctime())  # Add time
 			#f.write("<br>")
@@ -50,13 +50,14 @@ number_input = form.getvalue('number_message')
 
 head_HTML()
 temperature_input_form()  # Input form
+file_name = 'data.txt'
 add_temperature_in_file()  # Write input in file
 
 
 
 
 # Read file to web page
-readed = open('data.txt','r')
+readed = open(file_name,'r')
 role=[]#list of templature
 date=[]#list of date
 temp = []
