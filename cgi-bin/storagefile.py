@@ -32,7 +32,7 @@ def add_temperature_in_file():
 		writeData.write("\n")
 		writeData.close()
 	except:	
-		print("<h1>"+"Please enter only number!"+"</h1><br>")  # Show when enter alphabet
+		return(print("<h1>"+"Please enter only number!"+"</h1><br>"))  # Show when enter alphabet
 
 def read_temperature_file():
 	# Read file to web page
