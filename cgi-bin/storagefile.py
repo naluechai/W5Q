@@ -5,9 +5,11 @@ import random
 import csv
 
 def get_temp(data):
+	# Get function to sort for txt file
 	return float(data[0:5])
 	
 def get_temp_csv(data):
+	# Get function to sort for csv file
 	return float(data[0])
 
 def head_HTML():
