@@ -6,16 +6,21 @@ import random
 def get_temp(data):
 	return float(data[0:5])
 
-print("Content-type: text/html\r\n\r\n") 
-print("<html><head><style>")
-print("td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}")
-print("</style></head>")
-print("<body>")
+def head_HTML():
+	print("Content-type: text/html\r\n\r\n") 
+	print("<html><head><style>")
+	print("td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}")
+	print("</style></head>")
+	print("<body>")
+
+	
 form = cgi.FieldStorage() 
 number_input = form.getvalue('number_message')
+head_HTML()
 
 # Form for input
 print("<form method = 'post' ")
+print("<input type='submit' value='Enter' />") 
 print("<p>Input Number: <input type='text' name='number_message'/></p>") 
 print("<input type='submit' value='Enter' />") 
 print("</form>")
@@ -52,7 +57,6 @@ temp.sort(key=get_temp,reverse=True)
 for i in temp:
     role.append(float(i[0:5]))
     date.append(i[5:-5])
-
 
 print("In File:")
 print("<table>")
