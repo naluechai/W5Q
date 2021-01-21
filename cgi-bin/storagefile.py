@@ -55,8 +55,7 @@ def read_temperature_file():
 	
 	print("Last update: "+time.ctime())    
 	print("<br>")
-	print("In File")
-
+	print("In File:")
 	
 	# Show table
 	print("<table>")
@@ -89,8 +88,11 @@ def read_csv_file():
 		for temp, date in rawData:  # seperate sorted data to 2 list
 		    temperatureList.append(float(temp))
 		    dateList.append(date)
-	
-	# Show table
+		    
+	print("Last update: "+time.ctime())    
+	print("<br>")
+	print("In File:")
+	# Show table	
 	print("<table>")
 	print("<tr>")
 	print("<th>Date</th>")
@@ -104,6 +106,18 @@ def read_csv_file():
 		print("</tr>")
 	print("</table>")
 
+def add_temperature_in_csv_file():
+	# Add text if is not a alphabet
+	try:
+		# Check number is not alphabet
+		float(number_input)
+		with open('data.csv', 'a') as csvfile:
+			writeData = csv.writer(csvfile)
+			writeData.writerow([number_input,time.ctime()])
+	except:	
+		return(print("<h1>"+"Please enter only number!"+"</h1><br>"))  # Show when enter alphabet
+
+
 # Decalre varible
 form = cgi.FieldStorage() 
 number_input = form.getvalue('number_message')
@@ -111,8 +125,9 @@ file_name = 'data.txt'
 
 head_HTML()
 temperature_input_form()  # Input form
-add_temperature_in_file()  # Write input in txt file
-# read_temperature_file()  # Read txt file
+#add_temperature_in_file()  # Write input in txt file
+#read_temperature_file()  # Read txt file
+add_temperature_in_csv_file()  # Write input in csv file
 read_csv_file()  # Read csv file
 tail_HTML()
 
