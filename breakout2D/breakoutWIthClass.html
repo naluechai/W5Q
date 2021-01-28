@@ -14,16 +14,26 @@
             var canvas = document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");  
             class Main{
-                constructor( brickRowCount  /**, brickColumnCount , brickWidth , brickHeight ,brickPadding , 
-                brickOffsetTop ,brickOffsetLeft , brick**/){
+                constructor(){
+                    /*brickRowCount
+                    brickColumnCount
+                    brickWidth
+                    brickHeight
+                    brickPadding 
+                    brickOffsetTop 
+                    brickOffsetLeft  
+                    brick*/
                 var obj_Ball = new Ball( canvas.width/2 , canvas.height-30 , 2 , -2 ,10);
-                this.ball = obj_Ball;
+                this.ball = obj_Ball ;
+                var obj_Paddle = new Paddle();
+                this.paddle = obj_Paddle ;
                 }
+
                 draw(){   
-                     ctx.clearRect(0, 0, canvas.width, canvas.height);        
-                     this.ball.drawBall();
-                     this.ball.moveBall();
-                    
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);        
+                    this.ball.drawBall() ;
+                    this.ball.moveBall() ;
+                    this.paddle.drawPaddle() ;
                 }
             }
             class Ball{
@@ -54,17 +64,35 @@
             }
             class Wall{
                 constructor( x , y , status){
-
+                    
 
                 }
             }
             class Paddle{
                 constructor(){
-
-
+                    var paddleHeight = 10;
+                    this.paddH = paddleHeight ;
+                    var paddleWidth = 75;
+                    this.paddW = paddleWidth ;
+                    var paddleX = (canvas.width-paddleWidth)/2;
+                    this.padX= paddleX ;
+                }
+                 drawPaddle() {
+                    ctx.beginPath();
+                    ctx.rect(this.padX, canvas.height-this.paddH, this.paddW, this.paddH);
+                    ctx.fillStyle = "#0095DD";
+                    ctx.fill();
+                    ctx.closePath();
                 }
             }
-
+            
+            class InputProcessor{
+                constructor(){
+                    var rightPressed = false;
+                    var leftPressed = false;
+                }
+            }
+            
             var game=  new Main(5);
             function Run(){
                 game.draw();
