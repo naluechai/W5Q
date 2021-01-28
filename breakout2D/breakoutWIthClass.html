@@ -34,6 +34,8 @@
                     this.ball.drawBall() ;
                     this.ball.moveBall() ;
                     this.paddle.drawPaddle() ;
+                    //new function not complete
+                    this.paddle.movePaddle() ;
                 }
             }
             class Ball{
@@ -76,6 +78,10 @@
                     this.paddW = paddleWidth ;
                     var paddleX = (canvas.width-paddleWidth)/2;
                     this.padX= paddleX ;
+                    //not complete
+                    var input= new InputProcessor();
+                    this.input = input;
+
                 }
                  drawPaddle() {
                     ctx.beginPath();
@@ -84,12 +90,51 @@
                     ctx.fill();
                     ctx.closePath();
                 }
+                //new funtion not complete
+                movePaddle(){
+                    document.addEventListener("keydown", this.input.keyDownHandler, false);
+                    document.addEventListener("keyup", this.input.keyUpHandler, false);
+                    //this.input.keyDownHandler();
+                    //this.input.keyUpHandler();
+                    if(this.input.rPressed) {
+                        this.padX += 7;
+                        if (this.padX + this.paddW > canvas.width){
+                            this.padX = canvas.width - this.paddW;
+                        }
+                    }
+                    else if(this.input.lPressed) {
+                        this.padX -= 7;
+                        if (this.padX < 0){
+                            this.padX = 0;
+                        }
+                    }
+                }
             }
-            
+            // not complete
             class InputProcessor{
                 constructor(){
                     var rightPressed = false;
+                    this.rPressed = rightPressed;
                     var leftPressed = false;
+                    this.lPressed = leftPressed;
+                    this.ev = event;
+                }
+
+                keyDownHandler() {
+                    if(this.ev == "Right" || this.ev == "ArrowRight") {
+                        this.rPressed  = true;
+                    }
+                    else if(this.ev == "Left" || this.ev == "ArrowLeft") {
+                        this.lPressed = true;
+                    }
+                }
+                keyUpHandler() {
+                    if(this.ev == "Right" || this.evy == "ArrowRight") {
+                        this.rPressed  = false;
+                    }
+                    else if(this.ev == "Left" || this.ev == "ArrowLeft") {
+                        this.lPressed = false;
+                    }
                 }
             }
             
