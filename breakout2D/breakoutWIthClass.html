@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Hello</title>
+        <style>
+            * { padding: 0; margin: 0; }
+            canvas { background: #eee; display: block; margin: 0 auto; }
+        </style>
+    </head>
+    <body>
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");  
+            class Main{
+                constructor( brickRowCount  /**, brickColumnCount , brickWidth , brickHeight ,brickPadding , 
+                brickOffsetTop ,brickOffsetLeft , brick**/){
+                var obj_Ball = new Ball( canvas.width/2 , canvas.height-30 , 2 , -2 ,10);
+                this.ball = obj_Ball;
+                }
+                draw(){   
+                     ctx.clearRect(0, 0, canvas.width, canvas.height);        
+                     this.ball.drawBall();
+                     this.ball.moveBall();
+                    
+                }
+            }
+            class Ball{
+                constructor( x , y , dx , dy , ballRadius){
+                    this.x = x;
+                    this.y = y;
+                    this.dx = dx;
+                    this.dy = dy;
+                    this.ballRadius = ballRadius;
+                }
+                drawBall(){
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI*2);
+                    ctx.fillStyle = "#0095DD";
+                    ctx.fill();
+                    ctx.closePath();
+                }
+                moveBall(){
+                    this.x += this.dx ;
+                    this.y += this.dy ;
+                }
+            }
+            class Wall{
+                constructor( x , y , status){
+
+
+                }
+            }
+            class Paddle{
+                constructor(){
+
+
+                }
+            }
+
+            var game=  new Main(5);
+            function Run(){
+                game.draw();
+            }
+            setInterval(Run, 10); 
+            
+        </script>   
+    </body>
+</html>
