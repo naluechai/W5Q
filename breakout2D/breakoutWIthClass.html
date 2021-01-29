@@ -11,10 +11,10 @@
     <body>
     <canvas id="myCanvas" width="480" height="320"></canvas>
         <script>
-            var canvas = document.getElementById("myCanvas");
-            var ctx = canvas.getContext("2d");  
             class Main{
                 constructor(){
+                    this.canvas = document.getElementById("myCanvas");
+                    this.ctx = this.canvas.getContext("2d");  
                     /*brickRowCount
                     brickColumnCount
                     brickWidth
@@ -23,14 +23,14 @@
                     brickOffsetTop 
                     brickOffsetLeft  
                     brick*/
-                var obj_Ball = new Ball( canvas.width/2 , canvas.height-30 , 2 , -2 ,10);
-                this.ball = obj_Ball ;
-                var obj_Paddle = new Paddle();
-                this.paddle = obj_Paddle ;
+                    var obj_Ball = new Ball( this.canvas.width/2 , this.canvas.height-30 , 2 , -2 ,10);
+                    this.ball = obj_Ball ;
+                    var obj_Paddle = new Paddle();
+                    this.paddle = obj_Paddle ;
                 }
 
                 draw(){   
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);        
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);        
                     this.ball.drawBall() ;
                     this.ball.moveBall() ;
                     this.paddle.drawPaddle() ;
@@ -40,6 +40,8 @@
             }
             class Ball{
                 constructor( x , y , dx , dy , ballRadius){
+                    this.canvas = document.getElementById("myCanvas");
+                    this.ctx = this.canvas.getContext("2d");  
                     this.x = x;
                     this.y = y;
                     this.dx = dx;
@@ -47,17 +49,17 @@
                     this.ballRadius = ballRadius;
                 }
                 drawBall(){
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI*2);
-                    ctx.fillStyle = "#0095DD";
-                    ctx.fill();
-                    ctx.closePath();
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI*2);
+                    this.ctx.fillStyle = "#0095DD";
+                    this.ctx.fill();
+                    this.ctx.closePath();
                 }
                 moveBall(){
-                    if(this.x + this.dx > canvas.width-this.ballRadius || this.x + this.dx < this.ballRadius) {
+                    if(this.x + this.dx > this.canvas.width-this.ballRadius || this.x + this.dx < this.ballRadius) {
                         this.dx = -this.dx;
                     }
-                    if(this.y + this.dy > canvas.height-this.ballRadius || this.y + this.dy < this.ballRadius) {
+                    if(this.y + this.dy > this.canvas.height-this.ballRadius || this.y + this.dy < this.ballRadius) {
                         this.dy = -this.dy;
                     }
                     this.x += this.dx ;
@@ -66,43 +68,48 @@
             }
             class Wall{
                 constructor( x , y , status){
+                this.canvas = document.getElementById("myCanvas");
+                this.ctx = this.canvas.getContext("2d");  
                     
 
                 }
             }
             class Paddle{
                 constructor(){
+                    this. canvas = document.getElementById("myCanvas");
+                    this. ctx = this.canvas.getContext("2d"); 
                     var paddleHeight = 10;
                     this.paddH = paddleHeight ;
                     var paddleWidth = 75;
                     this.paddW = paddleWidth ;
-                    var paddleX = (canvas.width-paddleWidth)/2;
+                    var paddleX = (this.canvas.width-paddleWidth)/2;
                     this.padX= paddleX ;
                     //not complete
                     var input= new InputProcessor();
-                    this.input = input;
+                    this.ip = input;
 
                 }
                  drawPaddle() {
-                    ctx.beginPath();
-                    ctx.rect(this.padX, canvas.height-this.paddH, this.paddW, this.paddH);
-                    ctx.fillStyle = "#0095DD";
-                    ctx.fill();
-                    ctx.closePath();
+                    this.ctx.beginPath();
+                    this.ctx.rect(this.padX, this.canvas.height-this.paddH, this.paddW, this.paddH);
+                    this.ctx.fillStyle = "#0095DD";
+                    this.ctx.fill();
+                    this.ctx.closePath();
                 }
                 //new funtion not complete
                 movePaddle(){
-                    document.addEventListener("keydown", this.input.keyDownHandler, false);
-                    document.addEventListener("keyup", this.input.keyUpHandler, false);
+                    document.addEventListener("keydown", this.ip.keyDownHandler , false);
+                    document.addEventListener("keyup", this.ip.keyUpHandler, false);
                     //this.input.keyDownHandler();
                     //this.input.keyUpHandler();
-                    if(this.input.rPressed) {
+                    console.log(this.ip.rPressed);
+                    if(this.ip.rPressed === true) {
                         this.padX += 7;
                         if (this.padX + this.paddW > canvas.width){
                             this.padX = canvas.width - this.paddW;
                         }
                     }
-                    else if(this.input.lPressed) {
+                    else if(this.ip.lPressed === true) {
                         this.padX -= 7;
                         if (this.padX < 0){
                             this.padX = 0;
@@ -113,27 +120,30 @@
             // not complete
             class InputProcessor{
                 constructor(){
-                    var rightPressed = false;
-                    this.rPressed = rightPressed;
-                    var leftPressed = false;
-                    this.lPressed = leftPressed;
-                    this.ev = event;
+                    //var rightPressed = false;
+                    //this.rPressed = rightPressed;
+                    this.rPressed = false ;
+                    //var leftPressed = false;
+                    //this.lPressed = leftPressed;
+                    this.lPressed = false ;
                 }
-
-                keyDownHandler() {
-                    if(this.ev == "Right" || this.ev == "ArrowRight") {
-                        this.rPressed  = true;
+                
+                keyDownHandler(e) {
+                    console.log("down");
+                    if(e.key == "Right" || e.key == "ArrowRight") {
+                         this.rPressed  = true;
                     }
-                    else if(this.ev == "Left" || this.ev == "ArrowLeft") {
-                        this.lPressed = true;
+                    else if(e.key == "Left" || e.key == "ArrowLeft") {
+                         this.lPressed = true;
                     }
                 }
-                keyUpHandler() {
-                    if(this.ev == "Right" || this.evy == "ArrowRight") {
-                        this.rPressed  = false;
+                keyUpHandler(e) {
+                    console.log("up")
+                    if(e.key == "Right" || e.key == "ArrowRight") {
+                         this.rPressed  = false;
                     }
-                    else if(this.ev == "Left" || this.ev == "ArrowLeft") {
-                        this.lPressed = false;
+                    else if(e.key == "Left" || e.key == "ArrowLeft") {
+                         this.lPressed = false;
                     }
                 }
             }
