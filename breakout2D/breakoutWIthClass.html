@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -15,18 +15,30 @@
                 constructor(){
                     this.canvas = document.getElementById("myCanvas");
                     this.ctx = this.canvas.getContext("2d");  
-                    /*brickRowCount
-                    brickColumnCount
-                    brickWidth
-                    brickHeight
-                    brickPadding 
-                    brickOffsetTop 
-                    brickOffsetLeft  
-                    brick*/
                     var obj_Ball = new Ball( this.canvas.width/2 , this.canvas.height-30 , 2 , -2 ,10);
                     this.ball = obj_Ball ;
                     var obj_Paddle = new Paddle();
-                    this.paddle = obj_Paddle ;
+                    this.paddle = obj_Paddle;
+
+                    this.brickRowCount = 3;
+                    this.brickColumnCount = 5;
+                    this.brickWidth = 70;
+                    this.brickHeight = 20;
+                    this.brickPadding = 10;
+                    this.brickOffsetTop = 30;
+                    this.brickOffsetLeft = 30;
+                    this.brick
+
+                    // Declare object wall
+                    for (var c = 0; c < brickColumnCount; c++) {
+                      this.bricks[c] = [];
+                      for (var r = 0; r < brickRowCount; r++) {
+                        this.bricks[c][r] = new Wall(0,0,1);
+                      }
+                    }
+
+                    
+                
                 }
 
                 draw(){   
@@ -70,7 +82,9 @@
                 constructor( x , y , status){
                 this.canvas = document.getElementById("myCanvas");
                 this.ctx = this.canvas.getContext("2d");  
-                    
+                  this.x = x;
+                  this.y = y;
+                  this.status = status;
 
                 }
             }

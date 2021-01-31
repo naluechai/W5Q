@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html>
+   <head>
+       <meta charset="utf-8" />
+       <title>Gamedev Canvas Workshop</title>
+       <style>
+           * { padding: 0; margin: 0; }
+           canvas { background: #eee; display: block; margin: 0 auto; }
+       </style>
+   </head>
+   <body>
+   <canvas id="myCanvas" width="480" height="320"></canvas>
+       <script>
+          var canvas = document.getElementById("myCanvas");
+          var ctx = canvas.getContext("2d");
+          var ballRadius = 10;
+          var x = canvas.width/2;
+          var y = canvas.height-30;
+          var dx = 2;
+          var dy = -2;
+          var paddleHeight = 10;
+          var paddleWidth = 75;
+          var paddleX = (canvas.width-paddleWidth)/2;
+          var rightPressed = false;
+          var leftPressed = false;
+          var brickRowCount = 5;
+          var brickColumnCount = 3;
+          var brickWidth = 75;
+          var brickHeight = 20;
+          var brickPadding = 10;
+          var brickOffsetTop = 30;
+          var brickOffsetLeft = 30;
+          var score = 0;
+          var lives = 3;
+
+          var bricks = [];
+ 	          // สร้าง bricks ตามเเนว column เเละ row
+          for(var c=0; c<brickColumnCount; c++) {
+            bricks[c] = [];
+            for(var r=0; r<brickRowCount; r++) {
+              bricks[c][r] = { x: 0, y: 0, status: 1 }; // เก็บค่าตำเเหน่ง เเละสถานะ เมื่อค่า status เป็น 1 นำไปเเสดงบนจอ
+            }
+          }
+          // กำหนด Event Listener สำหรับ input 
+          document.addEventListener("keydown", keyDownHandler, false);
+          document.addEventListener("keyup", keyUpHandler, false);
+          // waiting for mouse input
+          document.addEventListener("mousemove", mouseMoveHandler, false);
+
+          // ขยับ ไม้ตี เมื่อกดปุ่มลง
+          function keyDownHandler(e) {
+              if(e.key == "Right" || e.key == "ArrowRight") {
+                  rightPressed = true;
+              }
+              else if(e.key == "Left" || e.key == "ArrowLeft") {
+                  leftPressed = true;
+              }
+          }
+
+          // หยุด ไม้ตี เมื่อปล่อยปุ่ม
+          function keyUpHandler(e) {	
+              if(e.key == "Right" || e.key == "ArrowRight") {
+                  rightPressed = false;
+              }
+              else if(e.key == "Left" || e.key == "ArrowLeft") {
+                  leftPressed = false;
+              }
+          }
+
+              function mouseMoveHandler(e) {
+
+                  var relativeX = e.clientX - canvas.offsetLeft;
+          // ตรวจสอบว่า mouseX อยู่ใน  canvas หรือไม่
+                  if(relativeX > 0 && relativeX < canvas.width) {
+                      paddleX = relativeX - paddleWidth/2; //เลื่อน paddle ไปอยู่ที่ตำแหน่ง mouse
+                  }
+              }
+          //ตรวจสอบการชนระหว่างกำแพงกำลูกบอล
+          function collisionDetection() {
+            for(var c=0; c<brickColumnCount; c++) {
+              for(var r=0; r<brickRowCount; r++) {
+                var b = bricks[c][r];
+                if(b.status == 1) { //ถ้ากำแพงยังไม่ถูกทำลาย
+                  if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                    dy = -dy;		//ลูกบอลจะกระเด้งกลับ
+                    b.status = 0;	//กำแพงจะถูกทำลาย
+                    score++; 		//ผู้เล่นจะได้คะแนน
+                    if(score == brickRowCount*brickColumnCount) {	//หากกำแพงถูกทำลายหมด
+                      alert("YOU WIN, CONGRATS!");  // แจ้งว่าชนะแล้ว
+                      document.location.reload();  	// เรื่มเกมใหม่
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+
+
+          //ฟังชั่นวาดลูกบอล
+          function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+          }
+          // ฟังก์ชั่นวาด ไม้ในการตี
+          function drawPaddle() {
+            ctx.beginPath();
+            ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+          }
+          //ฟังก์ชั่นวาด กำแพง
+          function drawBricks() {
+            for(var c=0; c<brickColumnCount; c++) {
+              for(var r=0; r<brickRowCount; r++) {
+                if(bricks[c][r].status == 1) { //จะวาดกำแพงที่ยังไม่ถูกทำลาย
+                  var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
+                  var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;
+                  bricks[c][r].x = brickX;
+                  bricks[c][r].y = brickY;
+                  ctx.beginPath();
+                  ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                  ctx.fillStyle = "#0095DD";
+                  ctx.fill();
+                  ctx.closePath();
+                }
+              }
+            }
+          }
+
+          // เเสดงคะเเนนที่ได้
+          function drawScore() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#0095DD";
+            ctx.fillText("Score: "+score, 8, 20);
+          }
+
+          // เเสดงจำนวนชีวิตที่เหลืออยู่
+          function drawLives() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#0095DD";
+            ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+          }
+
+          //main function ในการทำงาน
+          function draw() {
+            // ทำการ clear หน้าจอ เเละเเสดงผลใหม่
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            drawBricks();
+            drawBall();
+            drawPaddle();
+            drawScore();
+            drawLives();
+            collisionDetection();
+ 
+          // เด้งเมื่อชนขอบซ้ายหรือขวา
+            if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) 	
+              dx = -dx;
+            }
+          // เด้งเมื่อชนขอบบน
+            if(y + dy < ballRadius) {
+	
+              dy = -dy;
+            }
+
+  
+          else if(y + dy > canvas.height-ballRadius) {
+              if(x > paddleX && x < paddleX + paddleWidth) {
+	          //เด้งกลับเมื่อกระทบไม้ตี
+                dy = -dy;
+              } else { // หากตีลูกบอลพลาด จะเสียเเต้มชีวิต   
+      	          lives--;
+                if(!lives) { ถ้าชีวิตหมด จะแพ้ และเริ่มเกมใหม่
+                  alert("GAME OVER");
+                  document.location.reload();
+                }
+          //ถ้าไม่หมดจะทำการ ให้บอลและไม้ตีกลับไปเริ่มใหม่
+                else {
+	          // ตั้งตำแหน่งบอล
+                  x = canvas.width/2;
+                  y = canvas.height-30;
+	          // ตั้งความเร็วบอล
+                  dx = 3;
+                  dy = -3;
+	          // ตั้งตำแหน่งไม้ตี
+                  paddleX = (canvas.width-paddleWidth)/2;
+                }
+              }
+            }
+
+          // ทำการเช็คว่าไม้ตีเลยขอบหรือไม่?
+          // ถ้าไม้ตีไม่เลยขอบให้ขยับตามการกดปุ่มซ้ายขวา
+            if(rightPressed && paddleX < canvas.width-paddleWidth) {
+              paddleX += 7;
+            }
+            else if(leftPressed && paddleX > 0) {
+              paddleX -= 7;
+            }
+          // ทำให้ลูกบอลเปลี่ยนจุดในการวาดครั้งถัดไป
+            x += dx;
+            y += dy;
+            requestAnimationFrame(draw);
+          //เรียกใช้ draw() เพื่อให้ภาพมีเคลื่อนใหว
+          }
+          draw();
+       </script>  
+   </body>
+</html>
+
+
