@@ -27,7 +27,6 @@
                     this.brickPadding = 10;
                     this.brickOffsetTop = 30;
                     this.brickOffsetLeft = 30;
-                    
 
                     // Declare object wall
                     this.bricks = [];
@@ -36,7 +35,10 @@
                       for (var r = 0; r < this.brickRowCount; r++) {
                         this.bricks[c][r] = new Brick(0,0,1);
                       }
-                    }       
+                    }
+
+                    this.paddle.bricks = this.bricks; // ส่ง object birck ให้ paddle
+                  this.ball.game = this; // ส่ง object main ให้ ball
                 }
 
                 drawBricks() {
@@ -63,6 +65,7 @@
                     this.ball.moveBall() ;
                     this.paddle.drawPaddle();
                     this.drawBricks();
+                    this.ball.collisionDetection()
                     //new function not complete
                     this.paddle.movePaddle() ;
                 }
@@ -94,7 +97,29 @@
                     this.x += this.dx ;
                     this.y += this.dy ;
                 }
+
+                //ตรวจสอบการชนระหว่างกำแพงกำลูกบอล
+                collisionDetection() {
+                  for (var c = 0; c < this.game.brickColumnCount; c++) {
+                    for (var r = 0; r < this.game.brickRowCount; r++) {
+                      var b = this.game.bricks[c][r];
+                      if (b.status == 1) { //ถ้ากำแพงยังไม่ถูกทำลาย
+                        if (this.x > b.x && this.x < b.x + this.game.brickWidth && this.y > b.y && this.y < b.y + this.game.brickHeight) {
+                          this.dy = -this.dy;		//ลูกบอลจะกระเด้งกลับ
+                          b.status = 0;	//กำแพงจะถูกทำลาย
+                          // not complete
+                          /*score++; 		//ผู้เล่นจะได้คะแนน
+                          if (score == brickRowCount * brickColumnCount) {	//หากกำแพงถูกทำลายหมด
+                            alert("YOU WIN, CONGRATS!");  // แจ้งว่าชนะแล้ว
+                            document.location.reload();  	// เรื่มเกมใหม่
+                          }*/
+                        }
+                      }
+                    }
+                  }
+                }
             }
+
             class Brick{
                 constructor( x , y , status){
                 this.canvas = document.getElementById("myCanvas");
@@ -120,6 +145,7 @@
                     this.ip = input;
 
                 }
+
                  drawPaddle() {
                     this.ctx.beginPath();
                     this.ctx.rect(this.padX, this.canvas.height-this.paddH, this.paddW, this.paddH);
