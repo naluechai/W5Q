@@ -20,32 +20,49 @@
                     var obj_Paddle = new Paddle();
                     this.paddle = obj_Paddle;
 
-                    this.brickRowCount = 3;
-                    this.brickColumnCount = 5;
-                    this.brickWidth = 70;
+                    this.brickRowCount = 5;
+                    this.brickColumnCount = 3;
+                    this.brickWidth = 75;
                     this.brickHeight = 20;
                     this.brickPadding = 10;
                     this.brickOffsetTop = 30;
                     this.brickOffsetLeft = 30;
-                    this.brick
+                    
 
                     // Declare object wall
-                    for (var c = 0; c < brickColumnCount; c++) {
+                    this.bricks = [];
+                    for (var c = 0; c < this.brickColumnCount; c++) {
                       this.bricks[c] = [];
-                      for (var r = 0; r < brickRowCount; r++) {
+                      for (var r = 0; r < this.brickRowCount; r++) {
                         this.bricks[c][r] = new Wall(0,0,1);
                       }
-                    }
+                    }       
+                }
 
-                    
-                
+                drawBricks() {
+                  for (var c = 0; c < this.brickColumnCount; c++) {
+                    for (var r = 0; r < this.brickRowCount; r++) {
+                      if (this.bricks[c][r].status == 1) { //จะวาดกำแพงที่ยังไม่ถูกทำลาย
+                        var brickX = (r * (this.brickWidth + this.brickPadding)) + this.brickOffsetLeft;
+                        var brickY = (c * (this.brickHeight + this.brickPadding)) + this.brickOffsetTop;
+                        this.bricks[c][r].x = brickX;
+                        this.bricks[c][r].y = brickY;
+                        this.ctx.beginPath();
+                        this.ctx.rect(brickX, brickY, this.brickWidth, this.brickHeight);
+                        this.ctx.fillStyle = "#0095DD";
+                        this.ctx.fill();
+                        this.ctx.closePath();
+                      }
+                    }
+                  }
                 }
 
                 draw(){   
                     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);        
                     this.ball.drawBall() ;
                     this.ball.moveBall() ;
-                    this.paddle.drawPaddle() ;
+                    this.paddle.drawPaddle();
+                    this.drawBricks();
                     //new function not complete
                     this.paddle.movePaddle() ;
                 }
