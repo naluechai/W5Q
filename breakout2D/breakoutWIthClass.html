@@ -66,9 +66,9 @@
                     this.ball.moveBall() ;
                     this.paddle.drawPaddle();
                     this.paddle.drawScore();
+                    this.paddle.drawLives();
                     this.drawBricks();
                     this.ball.collisionDetection()
-                    //new function not complete
                     this.paddle.movePaddle() ;
                 }
             }
@@ -111,8 +111,8 @@
                           console.log("not die");
                           this.x = this.canvas.width / 2;
                           this.y = this.canvas.height - 30;
-                          this.dx = 3;
-                          this.dy = -3;
+                          this.dx = 2;
+                          this.dy = -2;
                           this.paddle.padX = (this.canvas.width - this.paddle.paddW) / 2;
                         }
                       }
@@ -132,7 +132,6 @@
                         if (this.x > b.x && this.x < b.x + this.game.brickWidth && this.y > b.y && this.y < b.y + this.game.brickHeight) {
                           this.dy = -this.dy;		//ลูกบอลจะกระเด้งกลับ
                           b.status = 0;	//กำแพงจะถูกทำลาย
-                          // not complete
                           this.paddle.score++; 		//ผู้เล่นจะได้คะแนน
                           if (this.paddle.score == this.game.brickRowCount * this.game.brickColumnCount) {	//หากกำแพงถูกทำลายหมด
                             alert("YOU WIN, CONGRATS!");  // แจ้งว่าชนะแล้ว
@@ -165,7 +164,6 @@
                     this.paddW = paddleWidth ;
                     var paddleX = (this.canvas.width-paddleWidth)/2;
                     this.padX= paddleX ;
-                    //not complete
                     var input= new InputProcessor();
                     this.ip = input;
 
@@ -180,6 +178,12 @@
                     this.ctx.fillStyle = "#0095DD";
                     this.ctx.fill();
                     this.ctx.closePath();
+                }
+
+                drawLives() {
+                  this.ctx.font = "16px Arial";
+                  this.ctx.fillStyle = "#0095DD";
+                  this.ctx.fillText("Lives: " + this.lives, this.canvas.width - 65, 20);
                 }
 
                 drawScore() {
@@ -210,7 +214,6 @@
                     }
                 }
             }
-            // not complete
             class InputProcessor{
                 constructor(){
                     //var rightPressed = false;
