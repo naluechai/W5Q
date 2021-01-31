@@ -134,8 +134,8 @@
             }
             class Paddle{
                 constructor(){
-                    this. canvas = document.getElementById("myCanvas");
-                    this. ctx = this.canvas.getContext("2d"); 
+                    this.canvas = document.getElementById("myCanvas");
+                    this.ctx = this.canvas.getContext("2d"); 
                     var paddleHeight = 10;
                     this.paddH = paddleHeight ;
                     var paddleWidth = 75;
@@ -170,14 +170,15 @@
                     document.addEventListener("keyup", this.ip.keyUpHandler, false);
                     //this.input.keyDownHandler();
                     //this.input.keyUpHandler();
-                    console.log(this.ip.rPressed);
-                    if(this.ip.rPressed === true) {
-                        this.padX += 7;
-                        if (this.padX + this.paddW > canvas.width){
-                            this.padX = canvas.width - this.paddW;
+                    //console.log(this.ip.rPressed);
+                    if(rPressed === true) {
+                      this.padX += 7;
+                      //paddleX < canvas.width - paddleWidth
+                      if (this.padX > this.canvas.width - this.paddW ){
+                            this.padX = this.canvas.width - this.paddW;
                         }
                     }
-                    else if(this.ip.lPressed === true) {
+                    else if(lPressed === true) {
                         this.padX -= 7;
                         if (this.padX < 0){
                             this.padX = 0;
@@ -190,33 +191,35 @@
                 constructor(){
                     //var rightPressed = false;
                     //this.rPressed = rightPressed;
-                    this.rPressed = false ;
+                    rPressed = false ;
                     //var leftPressed = false;
                     //this.lPressed = leftPressed;
-                    this.lPressed = false ;
+                    lPressed = false ;
                 }
                 
                 keyDownHandler(e) {
                     console.log("down");
                     if(e.key == "Right" || e.key == "ArrowRight") {
-                         this.rPressed  = true;
+                         rPressed  = true;
                     }
                     else if(e.key == "Left" || e.key == "ArrowLeft") {
-                         this.lPressed = true;
+                         lPressed = true;
                     }
                 }
                 keyUpHandler(e) {
                     console.log("up")
                     if(e.key == "Right" || e.key == "ArrowRight") {
-                         this.rPressed  = false;
+                         rPressed  = false;
                     }
                     else if(e.key == "Left" || e.key == "ArrowLeft") {
-                         this.lPressed = false;
+                         lPressed = false;
                     }
                 }
             }
             
-            var game=  new Main(5);
+            var game = new Main(5);
+            var rPressed = false;
+            var lPressed = false;
             function Run(){
                 game.draw();
             }
