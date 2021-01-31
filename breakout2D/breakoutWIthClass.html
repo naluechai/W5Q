@@ -34,7 +34,7 @@
                     for (var c = 0; c < this.brickColumnCount; c++) {
                       this.bricks[c] = [];
                       for (var r = 0; r < this.brickRowCount; r++) {
-                        this.bricks[c][r] = new Wall(0,0,1);
+                        this.bricks[c][r] = new Brick(0,0,1);
                       }
                     }       
                 }
@@ -95,7 +95,7 @@
                     this.y += this.dy ;
                 }
             }
-            class Wall{
+            class Brick{
                 constructor( x , y , status){
                 this.canvas = document.getElementById("myCanvas");
                 this.ctx = this.canvas.getContext("2d");  
