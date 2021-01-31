@@ -38,7 +38,8 @@
                     }
 
                     this.paddle.bricks = this.bricks; // ส่ง object birck ให้ paddle
-                  this.ball.game = this; // ส่ง object main ให้ ball
+                    this.ball.game = this; // ส่ง object main ให้ ball
+                    this.ball.paddle = this.paddle; // ส่ง object paddle ให้ ball
                 }
 
                 drawBricks() {
@@ -64,6 +65,7 @@
                     this.ball.drawBall() ;
                     this.ball.moveBall() ;
                     this.paddle.drawPaddle();
+                    this.paddle.drawScore();
                     this.drawBricks();
                     this.ball.collisionDetection()
                     //new function not complete
@@ -108,11 +110,11 @@
                           this.dy = -this.dy;		//ลูกบอลจะกระเด้งกลับ
                           b.status = 0;	//กำแพงจะถูกทำลาย
                           // not complete
-                          /*score++; 		//ผู้เล่นจะได้คะแนน
-                          if (score == brickRowCount * brickColumnCount) {	//หากกำแพงถูกทำลายหมด
+                          this.paddle.score++; 		//ผู้เล่นจะได้คะแนน
+                          if (this.paddle.score == this.game.brickRowCount * this.game.brickColumnCount) {	//หากกำแพงถูกทำลายหมด
                             alert("YOU WIN, CONGRATS!");  // แจ้งว่าชนะแล้ว
                             document.location.reload();  	// เรื่มเกมใหม่
-                          }*/
+                          }
                         }
                       }
                     }
@@ -144,15 +146,24 @@
                     var input= new InputProcessor();
                     this.ip = input;
 
+                    this.score = 0;
+
                 }
 
-                 drawPaddle() {
+                drawPaddle() {
                     this.ctx.beginPath();
                     this.ctx.rect(this.padX, this.canvas.height-this.paddH, this.paddW, this.paddH);
                     this.ctx.fillStyle = "#0095DD";
                     this.ctx.fill();
                     this.ctx.closePath();
                 }
+
+                drawScore() {
+                    this.ctx.font = "16px Arial";
+                    this.ctx.fillStyle = "#0095DD";
+                    this.ctx.fillText("Score: " + this.score, 8, 20);
+                }
+
                 //new funtion not complete
                 movePaddle(){
                     document.addEventListener("keydown", this.ip.keyDownHandler , false);
