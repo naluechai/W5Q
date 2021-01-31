@@ -93,9 +93,32 @@
                     if(this.x + this.dx > this.canvas.width-this.ballRadius || this.x + this.dx < this.ballRadius) {
                         this.dx = -this.dx;
                     }
-                    if(this.y + this.dy > this.canvas.height-this.ballRadius || this.y + this.dy < this.ballRadius) {
+                    if(this.y + this.dy < this.ballRadius ){
                         this.dy = -this.dy;
                     }
+                    else if (this.y + this.dy > this.canvas.height - this.ballRadius) {
+                      if (this.x > this.paddle.padX && this.x < this.paddle.padX + this.paddle.paddW) {
+                        this.dy = -this.dy;
+                      }
+                      else {
+                        this.paddle.lives--;
+                        console.log(this.paddle.lives);
+                        if (!this.paddle.lives) {
+                          alert("GAME OVER");
+                          document.location.reload();
+                        }
+                        else {
+                          console.log("not die");
+                          this.x = this.canvas.width / 2;
+                          this.y = this.canvas.height - 30;
+                          this.dx = 3;
+                          this.dy = -3;
+                          this.paddle.padX = (this.canvas.width - this.paddle.paddW) / 2;
+                        }
+                      }
+                    }
+
+
                     this.x += this.dx ;
                     this.y += this.dy ;
                 }
@@ -146,7 +169,8 @@
                     var input= new InputProcessor();
                     this.ip = input;
 
-                    this.score = 0;
+                  this.score = 0;
+                  this.lives = 3;
 
                 }
 
