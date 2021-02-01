@@ -169,9 +169,9 @@
                   this.paddW = paddleWidth ;
                   var paddleX = (this.canvas.width-paddleWidth)/2;
                   this.padX= paddleX ;
-
                   this.score = 0;
                   this.lives = 3;
+                  this.dx = 7; //move speed
 
                 }
 
@@ -216,13 +216,13 @@
                     }
                 }*/
                 moveLeft(){
-                  this.padX += 7;
+                  this.padX += this.dx;
                       if (this.padX > this.canvas.width - this.paddW ){
                             this.padX = this.canvas.width - this.paddW;
                         }
                 }
                 moveRight(){
-                  this.padX -= 7;
+                  this.padX -= this.dx;
                         if (this.padX < 0){
                             this.padX = 0;
                         }
