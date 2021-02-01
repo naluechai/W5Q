@@ -22,8 +22,6 @@
                     this.paddle = obj_Paddle;
                     var input= new InputProcessor();
                     this.ip = input;
-
-
                     this.brickRowCount = 5;
                     this.brickColumnCount = 3;
                     this.brickWidth = 75;
@@ -97,7 +95,7 @@
                     this.ctx.fill();
                     this.ctx.closePath();
                 }
-                //ทำให้บอลเคลื่อนที่
+                //ทำให้บอลเคลื่อนที่ และถ้าชนผนัง จะกระเด้ง หากเลยไม้ตีจะลดพลังชีวิตจนหมด เมื่อพลังชีวิตหมดจะแพ้ ถ้ากำแพงหมดก่อน จะชนะ
                 moveBall(){
                     if(this.x + this.dx > this.canvas.width-this.ballRadius || this.x + this.dx < this.ballRadius) {
                         this.dx = -this.dx;
@@ -130,7 +128,7 @@
                     this.y += this.dy ;
                 }
 
-                //ตรวจสอบการชนระหว่างกำแพงกำลูกบอล
+                //ตรวจสอบการชนระหว่างกำแพงกำลูกบอล และเพิ่มคะแนนเมื่อกำแพงถูกทำลาย
                 collisionDetection() {
                   for (var c = 0; c < this.game.brickColumnCount; c++) {
                     for (var r = 0; r < this.game.brickRowCount; r++) {
@@ -198,26 +196,6 @@
                     this.ctx.fillText("Score: " + this.score, 8, 20);
                 }
 
-                /*movePaddle(){
-                    document.addEventListener("keydown", this.ip.keyDownHandler , false);
-                    document.addEventListener("keyup", this.ip.keyUpHandler, false);
-                    //this.input.keyDownHandler();
-                    //this.input.keyUpHandler();
-                    //console.log(this.ip.rPressed);
-                    if(rPressed === true) {
-                      this.padX += 7;
-                      //paddleX < canvas.width - paddleWidth
-                      if (this.padX > this.canvas.width - this.paddW ){
-                            this.padX = this.canvas.width - this.paddW;
-                        }
-                    }
-                    else if(lPressed === true) {
-                        this.padX -= 7;
-                        if (this.padX < 0){
-                            this.padX = 0;
-                        }
-                    }
-                }*/
                 moveRight(){
                   this.padX += this.dx;
                       if (this.padX > this.canvas.width - this.paddW ){
