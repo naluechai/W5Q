@@ -19,6 +19,9 @@
                     this.ball = obj_Ball ;
                     var obj_Paddle = new Paddle();
                     this.paddle = obj_Paddle;
+                    var input= new InputProcessor();
+                    this.ip = input;
+
 
                     this.brickRowCount = 5;
                     this.brickColumnCount = 3;
@@ -40,6 +43,8 @@
                     this.paddle.bricks = this.bricks; // ส่ง object birck ให้ paddle
                     this.ball.game = this; // ส่ง object main ให้ ball
                     this.ball.paddle = this.paddle; // ส่ง object paddle ให้ ball
+                    this.paddle.ip = this.ip;  // ส่ง object InputProcessor ให้ paddle
+                    this.ip.paddle = this.ip;  // ส่ง object paddle ให้  InputProcessor
                 }
 
                 drawBricks() {
@@ -164,8 +169,6 @@
                     this.paddW = paddleWidth ;
                     var paddleX = (this.canvas.width-paddleWidth)/2;
                     this.padX= paddleX ;
-                    var input= new InputProcessor();
-                    this.ip = input;
 
                   this.score = 0;
                   this.lives = 3;
