@@ -17,6 +17,7 @@
                     this.ctx = this.canvas.getContext('2d');
 
                     this.fruit.snake = snake();
+                    this.snake.fruit = fruit();
                 }
             }
 
@@ -27,14 +28,17 @@
                 }
 
                 move(x,y){
-                    this.body.shift();
-                    this.body.push((x,y));
+                    this.body.shift(); //remove the old tail position
+                    this.body.push((x,y)); //move the head to new (x,y)
                 }
 
+                // when eat a fruit the tail will remain in the same position and move only the head
                 eat_fruit(x,y){
                     this.body.push((x,y));
+                    this.fruit.new_fruit()
                 }
 
+                //if the new position was in body will get a gameover massage
                 self_coalition_check(x,y){
                     if (this.body.include([x,y])){
                         //gameover method in here
@@ -47,12 +51,13 @@
                     this.position = new_fruit();
                 }
 
+                //create new fruit
                 new_fruit(){
                     var random = true
                     while (random){
                         var x = Math.floor((Math.random()*10)+1); // random 1-10
                         var y = Math.floor((Math.random()*10)+1);
-                        if (!(this.snake.include([x,y]))){
+                        if (!(this.snake.include([x,y]))){ //checking the new fruit position if new position in snake body will random a new position 
                             random = false;
                         }
                     }
