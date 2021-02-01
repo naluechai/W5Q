@@ -174,7 +174,7 @@
                 dy = -dy;
               } else { // หากตีลูกบอลพลาด จะเสียเเต้มชีวิต   
       	          lives--;
-                if(!lives) { ถ้าชีวิตหมด จะแพ้ และเริ่มเกมใหม่
+                if(!lives) { //ถ้าชีวิตหมด จะแพ้ และเริ่มเกมใหม่
                   alert("GAME OVER");
                   document.location.reload();
                 }
@@ -205,8 +205,8 @@
             y += dy;
             requestAnimationFrame(draw);
           //เรียกใช้ draw() เพื่อให้ภาพมีเคลื่อนใหว
-          }
           draw();
+          
        </script>  
    </body>
 </html>
