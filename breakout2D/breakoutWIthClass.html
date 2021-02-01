@@ -11,6 +11,7 @@
     <body>
     <canvas id="myCanvas" width="480" height="320"></canvas>
         <script>
+          //Class การทำงานของเกม
             class Main{
                 constructor(){
                     this.canvas = document.getElementById("myCanvas");
@@ -47,7 +48,7 @@
                     this.ip.paddle = this.paddle;  // ส่ง object paddle ให้  InputProcessor
                     console.log(this.ip.paddle)
                 }
-
+                //สร้างกำแพงและวาดกำแพง
                 drawBricks() {
                   for (var c = 0; c < this.brickColumnCount; c++) {
                     for (var r = 0; r < this.brickRowCount; r++) {
@@ -65,7 +66,7 @@
                     }
                   }
                 }
-
+                //ใช้ในการเริ่มเกม
                 draw(){   
                     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);        
                     this.ball.drawBall() ;
@@ -75,9 +76,9 @@
                     this.paddle.drawLives();
                     this.drawBricks();
                     this.ball.collisionDetection()
-                    //this.paddle.movePaddle() ;
                 }
             }
+            //Class เก็บข้อมูลลูกบอล ทิศทาง ขนาด ความเร็ว
             class Ball{
                 constructor( x , y , dx , dy , ballRadius){
                     this.canvas = document.getElementById("myCanvas");
@@ -88,6 +89,7 @@
                     this.dy = dy;
                     this.ballRadius = ballRadius;
                 }
+                //วาดลูกบอล
                 drawBall(){
                     this.ctx.beginPath();
                     this.ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI*2);
@@ -95,6 +97,7 @@
                     this.ctx.fill();
                     this.ctx.closePath();
                 }
+                //ทำให้บอลเคลื่อนที่
                 moveBall(){
                     if(this.x + this.dx > this.canvas.width-this.ballRadius || this.x + this.dx < this.ballRadius) {
                         this.dx = -this.dx;
@@ -123,8 +126,6 @@
                         }
                       }
                     }
-
-
                     this.x += this.dx ;
                     this.y += this.dy ;
                 }
@@ -149,7 +150,7 @@
                   }
                 }
             }
-
+            //Classเก็บข้อมูล ของกำแพง คือ ตำแหน่ง และ สถานะ
             class Brick{
                 constructor( x , y , status){
                 this.canvas = document.getElementById("myCanvas");
@@ -160,6 +161,7 @@
 
                 }
             }
+            //Class ไม้ตี
             class Paddle{
                 constructor(){
                   this.canvas = document.getElementById("myCanvas");
@@ -172,7 +174,7 @@
                   this.padX= paddleX ;
                   this.score = 0;
                   this.lives = 3;
-                  this.dx = 7; //move speed
+                  this.dx = 20; //move speed
 
                 }
 
@@ -234,9 +236,6 @@
                     console.log(this.paddle);
                     document.addEventListener("keydown", this.checkInput , false);
                     document.addEventListener("keyup", this.checkInput, false);
-                    //rPressed = false ;
-                    //lPressed = false ;
-                  
                 }
                 checkInput(e){
                   if (e.key == "ArrowRight") {
@@ -246,38 +245,13 @@
                     game.paddle.moveLeft();
                     }
                 }
-                
-                keyDownHandler(e) {
-                    console.log("down");
-                    if(e.key == "Right" || e.key == "ArrowRight") {
-                         // rPressed  = true;
-                    }
-                    else if(e.key == "Left" || e.key == "ArrowLeft") {
-                         // lPressed = true;
-
-                         
-                    }
-                }
-                keyUpHandler(e) {
-                    console.log("up")
-                    if(e.key == "Right" || e.key == "ArrowRight") {
-                         // rPressed  = false;
-                    }
-                    else if(e.key == "Left" || e.key == "ArrowLeft") {
-                         // lPressed = false;
-                    }
-                }
             }
             
             var game = new Main(5);
-            //var rPressed = false;
-            //var lPressed = false;
             function Run(){
                 game.draw();
             }
             setInterval(Run, 10); 
-            
-            
         </script>   
     </body>
 </html>
