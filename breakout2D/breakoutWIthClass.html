@@ -22,6 +22,7 @@
                     this.paddle = obj_Paddle;
                     var input= new InputProcessor();
                     this.ip = input;
+                    // ตั้งค่ารายละเอียดของกำแพงทั้งหมด
                     this.brickRowCount = 5;
                     this.brickColumnCount = 3;
                     this.brickWidth = 75;
@@ -44,7 +45,6 @@
                     this.ball.paddle = this.paddle; // ส่ง object paddle ให้ ball
                     this.paddle.ip = this.ip;  // ส่ง object InputProcessor ให้ paddle
                     this.ip.paddle = this.paddle;  // ส่ง object paddle ให้  InputProcessor
-                    console.log(this.ip.paddle)
                 }
                 //สร้างกำแพงและวาดกำแพง
                 drawBricks() {
@@ -108,13 +108,16 @@
                         this.dy = -this.dy;
                       }
                       else {
+                      	// ลด lives ถ้ารับลูกไม่ได้
                         this.paddle.lives--;
                         console.log(this.paddle.lives);
+                        // แจ้งจบเกมถ้า lives หมด
                         if (!this.paddle.lives) {
                           alert("GAME OVER");
                           document.location.reload();
                         }
-                        else {
+                        // ตั้งตำแหน่ง ลูกบอล กับ ไม้ตีใหม่ ถ้ายัง lives ยังไม่หมด           
+                        else {  	        	 
                           console.log("not die");
                           this.x = this.canvas.width / 2;
                           this.y = this.canvas.height - 30;
@@ -215,6 +218,8 @@
                     document.addEventListener("keydown", this.checkInput , false);
                     document.addEventListener("keyup", this.checkInput, false);
                 }
+                
+                // ขยับไม้ตีตามการกดลูกศร ซ้าย-ขวา
                 checkInput(e){
                   if (e.key == "ArrowRight") {
                     game.paddle.moveRight();  // game is main class
