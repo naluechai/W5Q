@@ -230,11 +230,21 @@
             }
             class InputProcessor{
                 constructor(){
-                    rPressed = false ;
-                    lPressed = false ;
+                    var padd = new Paddle();
+                    //rPressed = false ;
+                    //lPressed = false ;
+                  
+                }
+                checkInput(e){
+                  if (e.key == "ArrowRight") {
+                    padd.moveRight();
+                  }
+                  else if(e.key == "ArrowLeft") {
+                      padd.moveLeft();
+                    }
                 }
                 
-                keyDownHandler(e) {
+                /*keyDownHandler(e) {
                     console.log("down");
                     if(e.key == "Right" || e.key == "ArrowRight") {
                          rPressed  = true;
@@ -251,12 +261,12 @@
                     else if(e.key == "Left" || e.key == "ArrowLeft") {
                          lPressed = false;
                     }
-                }
+                }*/
             }
             
             var game = new Main(5);
-            var rPressed = false;
-            var lPressed = false;
+            //var rPressed = false;
+            //var lPressed = false;
             function Run(){
                 game.draw();
             }
