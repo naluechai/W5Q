@@ -175,7 +175,7 @@
                   this.padX= paddleX ;
                   this.score = 0;
                   this.lives = 3;
-                  this.dx = 20; //move speed
+                  this.velocity = 20; //move speed
 
                 }
                 //วาดไม้ตี
@@ -200,14 +200,14 @@
                 }
                 //เคลื่อนที่ไม้ตีไปทางขวา
                 moveRight(){
-                  this.padX += this.dx;
+                  this.padX += this.velocity;
                       if (this.padX > this.canvas.width - this.paddW ){
                             this.padX = this.canvas.width - this.paddW;
                         }
                 }
                 //เคลื่อนที่ไม้ตีไปทางซ้าย
                 moveLeft(){
-                  this.padX -= this.dx;
+                  this.padX -= this.velocity;
                         if (this.padX < 0){
                             this.padX = 0;
                         }
@@ -219,12 +219,9 @@
                     document.addEventListener("keydown", this.checkInput , false);
                     document.addEventListener("keyup", this.checkInput, false);
                 }
-<<<<<<< HEAD
+                
                 
                 // ขยับไม้ตีตามการกดลูกศร ซ้าย-ขวา
-=======
-                //หากมีการกดลูกศร ขวา ให้ไม้ตีไปทางขวา
->>>>>>> f023c7c3ec11ca5ad516d00916b13f0d9e3c3d91
                 checkInput(e){
                   if (e.key == "ArrowRight") { 
                     game.paddle.moveRight();  // game is main class
