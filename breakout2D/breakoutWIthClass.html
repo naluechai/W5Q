@@ -161,14 +161,14 @@
             }
             class Paddle{
                 constructor(){
-                    this.canvas = document.getElementById("myCanvas");
-                    this.ctx = this.canvas.getContext("2d"); 
-                    var paddleHeight = 10;
-                    this.paddH = paddleHeight ;
-                    var paddleWidth = 75;
-                    this.paddW = paddleWidth ;
-                    var paddleX = (this.canvas.width-paddleWidth)/2;
-                    this.padX= paddleX ;
+                  this.canvas = document.getElementById("myCanvas");
+                  this.ctx = this.canvas.getContext("2d"); 
+                  var paddleHeight = 10;
+                  this.paddH = paddleHeight ;
+                  var paddleWidth = 75;
+                  this.paddW = paddleWidth ;
+                  var paddleX = (this.canvas.width-paddleWidth)/2;
+                  this.padX= paddleX ;
 
                   this.score = 0;
                   this.lives = 3;
@@ -195,8 +195,7 @@
                     this.ctx.fillText("Score: " + this.score, 8, 20);
                 }
 
-                //new funtion not complete
-                movePaddle(){
+                /*movePaddle(){
                     document.addEventListener("keydown", this.ip.keyDownHandler , false);
                     document.addEventListener("keyup", this.ip.keyUpHandler, false);
                     //this.input.keyDownHandler();
@@ -215,15 +214,23 @@
                             this.padX = 0;
                         }
                     }
+                }*/
+                moveLeft(){
+                  this.padX += 7;
+                      if (this.padX > this.canvas.width - this.paddW ){
+                            this.padX = this.canvas.width - this.paddW;
+                        }
+                }
+                moveRight(){
+                  this.padX -= 7;
+                        if (this.padX < 0){
+                            this.padX = 0;
+                        }
                 }
             }
             class InputProcessor{
                 constructor(){
-                    //var rightPressed = false;
-                    //this.rPressed = rightPressed;
                     rPressed = false ;
-                    //var leftPressed = false;
-                    //this.lPressed = leftPressed;
                     lPressed = false ;
                 }
                 
