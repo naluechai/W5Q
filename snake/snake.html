@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Hello</title>
+        <style>
+            * { padding: 0; margin: 0; }
+            canvas { background: #eee; display: block; margin: 0 auto; }
+        </style>
+    </head>
+    <body>
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+        <script>
+            class main{
+                construtor(){
+                    this.canvas = document.getElementById('myCanvas');
+                    this.ctx = this.canvas.getContext('2d');
+
+                    this.fruit.snake = snake();
+                }
+            }
+
+            class snake{
+                construtor(){
+                    this.body = [[0,0],[0,1],[0,2]]; // starting point
+                    this.direction = 'right'; //can be up,down,left,right
+                }
+
+                move(x,y){
+                    this.body.shift();
+                    this.body.push((x,y));
+                }
+
+                eat_fruit(x,y){
+                    this.body.push((x,y));
+                }
+
+                self_coalition_check(x,y){
+                    if (this.body.include([x,y])){
+                        //gameover method in here
+                    }
+                }
+            }
+
+            class fruit{
+                construtor(){
+                    this.position = new_fruit();
+                }
+
+                new_fruit(){
+                    var random = true
+                    while (random){
+                        var x = Math.floor((Math.random()*10)+1); // random 1-10
+                        var y = Math.floor((Math.random()*10)+1);
+                        if (!(this.snake.include([x,y]))){
+                            random = false;
+                        }
+                    }
+                    return [x,y]
+                }
+
+            }
+
+        </script>   
+    </body>
+</html>
