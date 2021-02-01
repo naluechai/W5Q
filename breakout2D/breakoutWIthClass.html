@@ -44,7 +44,6 @@
                     this.ball.paddle = this.paddle; // ส่ง object paddle ให้ ball
                     this.paddle.ip = this.ip;  // ส่ง object InputProcessor ให้ paddle
                     this.ip.paddle = this.paddle;  // ส่ง object paddle ให้  InputProcessor
-                    console.log(this.ip.paddle)
                 }
                 //สร้างกำแพงและวาดกำแพง
                 drawBricks() {
@@ -109,13 +108,11 @@
                       }
                       else {
                         this.paddle.lives--;
-                        console.log(this.paddle.lives);
                         if (!this.paddle.lives) {
                           alert("GAME OVER");
                           document.location.reload();
                         }
                         else {
-                          console.log("not die");
                           this.x = this.canvas.width / 2;
                           this.y = this.canvas.height - 30;
                           this.dx = 2;
@@ -175,7 +172,7 @@
                   this.dx = 20; //move speed
 
                 }
-
+                //วาดไม้ตี
                 drawPaddle() {
                     this.ctx.beginPath();
                     this.ctx.rect(this.padX, this.canvas.height-this.paddH, this.paddW, this.paddH);
@@ -183,25 +180,26 @@
                     this.ctx.fill();
                     this.ctx.closePath();
                 }
-
+                //วาดพลังชีวิต
                 drawLives() {
                   this.ctx.font = "16px Arial";
                   this.ctx.fillStyle = "#0095DD";
                   this.ctx.fillText("Lives: " + this.lives, this.canvas.width - 65, 20);
                 }
-
+                //วาดคะแนน
                 drawScore() {
                     this.ctx.font = "16px Arial";
                     this.ctx.fillStyle = "#0095DD";
                     this.ctx.fillText("Score: " + this.score, 8, 20);
                 }
-
+                //เคลื่อนที่ไม้ตีไปทางขวา
                 moveRight(){
                   this.padX += this.dx;
                       if (this.padX > this.canvas.width - this.paddW ){
                             this.padX = this.canvas.width - this.paddW;
                         }
                 }
+                //เคลื่อนที่ไม้ตีไปทางซ้าย
                 moveLeft(){
                   this.padX -= this.dx;
                         if (this.padX < 0){
@@ -215,21 +213,23 @@
                     document.addEventListener("keydown", this.checkInput , false);
                     document.addEventListener("keyup", this.checkInput, false);
                 }
+                //หากมีการกดลูกศร ขวา ให้ไม้ตีไปทางขวา
                 checkInput(e){
-                  if (e.key == "ArrowRight") {
+                  if (e.key == "ArrowRight") { 
                     game.paddle.moveRight();  // game is main class
                   }
+                //หากมีการกดลูกศร ซ้าย ให้ไม้ตีไปทางซ้าย
                   else if(e.key == "ArrowLeft") {
                     game.paddle.moveLeft();
                     }
                 }
             }
             
-            var game = new Main(5);
-            function Run(){
+            var game = new Main(); //ประกาศ object เพื่อเตรียมเล่นเกม
+            function Run(){ //สร้างฟังก์ชั่นเพื่อให้เรียกใช้ตัวเกมผ่านฟังก์ชั่นนี้ห
                 game.draw();
             }
-            setInterval(Run, 10); 
+            setInterval(Run, 10); //เรียกใช้ฟังก์ชั่นที่สร้างไว้
         </script>   
     </body>
 </html>
