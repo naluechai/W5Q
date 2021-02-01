@@ -45,6 +45,7 @@
                     this.ball.paddle = this.paddle; // ส่ง object paddle ให้ ball
                     this.paddle.ip = this.ip;  // ส่ง object InputProcessor ให้ paddle
                     this.ip.paddle = this.paddle;  // ส่ง object paddle ให้  InputProcessor
+                    console.log(this.ip.paddle)
                 }
 
                 drawBricks() {
@@ -74,7 +75,7 @@
                     this.paddle.drawLives();
                     this.drawBricks();
                     this.ball.collisionDetection()
-                    this.paddle.movePaddle() ;
+                    //this.paddle.movePaddle() ;
                 }
             }
             class Ball{
@@ -215,13 +216,13 @@
                         }
                     }
                 }*/
-                moveLeft(){
+                moveRight(){
                   this.padX += this.dx;
                       if (this.padX > this.canvas.width - this.paddW ){
                             this.padX = this.canvas.width - this.paddW;
                         }
                 }
-                moveRight(){
+                moveLeft(){
                   this.padX -= this.dx;
                         if (this.padX < 0){
                             this.padX = 0;
@@ -230,38 +231,42 @@
             }
             class InputProcessor{
                 constructor(){
-                    var padd = new Paddle();
+                    console.log(this.paddle);
+                    document.addEventListener("keydown", this.checkInput , false);
+                    document.addEventListener("keyup", this.checkInput, false);
                     //rPressed = false ;
                     //lPressed = false ;
                   
                 }
                 checkInput(e){
                   if (e.key == "ArrowRight") {
-                    padd.moveRight();
+                    game.paddle.moveRight();  // game is main class
                   }
                   else if(e.key == "ArrowLeft") {
-                      padd.moveLeft();
+                    game.paddle.moveLeft();
                     }
                 }
                 
-                /*keyDownHandler(e) {
+                keyDownHandler(e) {
                     console.log("down");
                     if(e.key == "Right" || e.key == "ArrowRight") {
-                         rPressed  = true;
+                         // rPressed  = true;
                     }
                     else if(e.key == "Left" || e.key == "ArrowLeft") {
-                         lPressed = true;
+                         // lPressed = true;
+
+                         
                     }
                 }
                 keyUpHandler(e) {
                     console.log("up")
                     if(e.key == "Right" || e.key == "ArrowRight") {
-                         rPressed  = false;
+                         // rPressed  = false;
                     }
                     else if(e.key == "Left" || e.key == "ArrowLeft") {
-                         lPressed = false;
+                         // lPressed = false;
                     }
-                }*/
+                }
             }
             
             var game = new Main(5);
@@ -271,6 +276,7 @@
                 game.draw();
             }
             setInterval(Run, 10); 
+            
             
         </script>   
     </body>
