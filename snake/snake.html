@@ -16,15 +16,18 @@
                         this.canvas = document.getElementById('myCanvas');
                         this.ctx = this.canvas.getContext("2d");
 
-                        var snake = new Snake();
-                        this.snake = snake ;
-                        var fruit = new Fruit();
-                        this.fruit = fruit ;
-
                         //for grid world
                         this.gridSize = 50 ;
                         this.column = this.canvas.width / this.gridSize ; //13
                         this.row = this.canvas.height / this.gridSize ; //13
+
+                        var snake = new Snake();
+                        this.snake = snake ;
+                        var fruit = new Fruit( Math.floor(Math.random() * this.column)  , ( Math.floor(Math.random() * this.row) )
+                        , this.gridSize); // random fruit first time 
+                        this.fruit = fruit ;
+
+                        
                         
                        /* var matrix = [] ;
                         for ( var i = 0; i < this.row ; i++ ) {
@@ -46,22 +49,26 @@
                         this.ctx.stroke();
                         this.ctx.closePath();
                     }
+                    drawNumber( x , y ) {
+                        this.ctx.font = "20px Arial";
+                        this.ctx.fillStyle = "#0095DD";
+                        this.ctx.fillText( x , x*this.gridSize , y*this.gridSize , 100);
+                        this.ctx.fillStyle = "#000000"
+                        this.ctx.fillText( y , x*this.gridSize+20 , y*this.gridSize , 100);
+                    }
                     //สร้างตารางทั้งหมด
                     createWorld(){
-                        for ( var i = 0 ; i < this.row ; i++ ){
-                            for ( var j = 0 ; j < this.column ; j++){
+                        for ( var i = 0 ; i <= this.row ; i++ ){
+                            for ( var j = 0 ; j <= this.column ; j++){
                                 this.createField( i , j ); 
+                                this.drawNumber( i , j); //check generate block
                             }
                         }
                     }
                     draw(){
+                        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);    
                         this.createWorld();
-                        /*this.ctx.beginPath();   
-                        this.ctx.rect(50 , 50 ,this.gridSize,this.gridSize);
-                        this.ctx.fillStyle = "#4E4E4E";
-                        this.ctx.fill();
-                        this.ctx.closePath();*/
-                        
+                        this.fruit.drawFruit();
                     }
                 }
 
@@ -91,12 +98,25 @@
                 }
 
                 class Fruit{
-                    constructor(){
-                        
+                    constructor ( x , y , grid){
+                        this.canvas = document.getElementById('myCanvas');
+                        this.ctx = this.canvas.getContext("2d");
+                        this.color = "#33FFDC" ;
+                        this.x = x ;
+                        this.y = y ;
+                        this.gridSize = grid ;
                     }
-
+                    drawFruit(){
+                        this.ctx.beginPath();
+                        this.ctx.arc((this.x *this.gridSize)+(this.gridSize /2)  , (this.y *this.gridSize)+(this.gridSize /2) 
+                        , this.gridSize/2 , 0 ,Math.PI*2);
+                        this.ctx.fillStyle = this.color ;
+                        this.ctx.fill();
+                        this.ctx.closePath();
+                    }
+เ
                     //create new fruit
-                    new_fruit(){
+                    /*new_fruit(){
                         var random = true
                         while (random){
                             var x = Math.floor((Math.random()*10)+1); // random 1-10
@@ -106,7 +126,7 @@
                             }
                         }
                         return [x,y]
-                    }
+                    }*/
 
                 }
 
