@@ -1,71 +1,125 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Hello</title>
-        <style>
-            * { padding: 0; margin: 0; }
-            canvas { background: #eee; display: block; margin: 0 auto; }
-        </style>
-    </head>
-    <body>
-    <canvas id="myCanvas" width="480" height="320"></canvas>
-        <script>
-            class main{
-                construtor(){
-                    this.canvas = document.getElementById('myCanvas');
-                    this.ctx = this.canvas.getContext('2d');
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8" />
+            <title>Hello</title>
+            <style>
+                * { padding: 0; margin: 0; }
+                canvas { background: #eee; display: block; margin: 0 auto; }
+            </style>
+        </head>
+        <body>
+        <canvas id="myCanvas" width="650" height="650"></canvas>
+            <script>
+                class Main{
+                    constructor(){
+                        this.canvas = document.getElementById('myCanvas');
+                        this.ctx = this.canvas.getContext("2d");
 
-                    this.fruit.snake = snake();
-                    this.snake.fruit = fruit();
-                }
-            }
+                        var snake = new Snake();
+                        this.snake = snake ;
+                        var fruit = new Fruit();
+                        this.fruit = fruit ;
 
-            class snake{
-                construtor(){
-                    this.body = [[0,0],[0,1],[0,2]]; // starting point
-                    this.direction = 'right'; //can be up,down,left,right
-                }
-
-                move(x,y){
-                    this.body.shift(); //remove the old tail position
-                    this.body.push((x,y)); //move the head to new (x,y)
-                }
-
-                // when eat a fruit the tail will remain in the same position and move only the head
-                eat_fruit(x,y){
-                    this.body.push((x,y));
-                    this.fruit.new_fruit()
-                }
-
-                //if the new position was in body will get a gameover massage
-                self_coalition_check(x,y){
-                    if (this.body.include([x,y])){
-                        //gameover method in here
+                        //for grid world
+                        this.gridSize = 50 ;
+                        this.column = this.canvas.width / this.gridSize ; //13
+                        this.row = this.canvas.height / this.gridSize ; //13
+                        
+                       /* var matrix = [] ;
+                        for ( var i = 0; i < this.row ; i++ ) {
+                            console.log(i);
+                            matrix[i] = [] ;
+                            for ( var j = 0; j < this.column; j++ ) {
+                                console.log(j);
+                                matrix[i][j] ;
+                            }
+                        }*/
+                        //console.log('13 * 13  matrix declared finished ')
                     }
-                }
-            }
-
-            class fruit{
-                construtor(){
-                    this.position = new_fruit();
-                }
-
-                //create new fruit
-                new_fruit(){
-                    var random = true
-                    while (random){
-                        var x = Math.floor((Math.random()*10)+1); // random 1-10
-                        var y = Math.floor((Math.random()*10)+1);
-                        if (!(this.snake.include([x,y]))){ //checking the new fruit position if new position in snake body will random a new position 
-                            random = false;
+                    //สร้างตารางแต่ละช่อง
+                    createField(column ,row ){
+                        this.ctx.beginPath();
+                        this.ctx.rect(column*this.gridSize , row*this.gridSize ,this.gridSize,this.gridSize);
+                        this.ctx.fillStyle = "#ffffff";
+                        this.ctx.fill();
+                        this.ctx.stroke();
+                        this.ctx.closePath();
+                    }
+                    //สร้างตารางทั้งหมด
+                    createWorld(){
+                        for ( var i = 0 ; i < this.row ; i++ ){
+                            for ( var j = 0 ; j < this.column ; j++){
+                                this.createField( i , j ); 
+                            }
                         }
                     }
-                    return [x,y]
+                    draw(){
+                        this.createWorld();
+                        /*this.ctx.beginPath();   
+                        this.ctx.rect(50 , 50 ,this.gridSize,this.gridSize);
+                        this.ctx.fillStyle = "#4E4E4E";
+                        this.ctx.fill();
+                        this.ctx.closePath();*/
+                        
+                    }
                 }
 
-            }
+                class Snake{
+                    constructor(){
+                        this.body = [[0,0],[0,1],[0,2]]; // starting point
+                        this.direction = 'right'; //can be up,down,left,right
+                    }
 
-        </script>   
-    </body>
-</html>
+                    move(x,y){
+                        this.body.shift(); //remove the old tail position
+                        this.body.push((x,y)); //move the head to new (x,y)
+                    }
+
+                    // when eat a fruit the tail will remain in the same position and move only the head
+                    eat_fruit(x,y){
+                        this.body.push((x,y));
+                        this.fruit.new_fruit()
+                    }
+
+                    //if the new position was in body will get a gameover massage
+                    self_coalition_check(x,y){
+                        if (this.body.include([x,y])){
+                            //gameover method in here
+                        }
+                    }
+                }
+
+                class Fruit{
+                    constructor(){
+                        
+                    }
+
+                    //create new fruit
+                    new_fruit(){
+                        var random = true
+                        while (random){
+                            var x = Math.floor((Math.random()*10)+1); // random 1-10
+                            var y = Math.floor((Math.random()*10)+1);
+                            if (!(this.snake.include([x,y]))){ //checking the new fruit position if new position in snake body will random a new position 
+                                random = false;
+                            }
+                        }
+                        return [x,y]
+                    }
+
+                }
+
+                class InputProcessor{
+                    constructor(){
+
+                    }
+                }
+                var game = new Main();
+                function Run(){
+                    game.draw();
+                }
+                setInterval(Run, 100); 
+            </script>   
+        </body>
+    </html>
