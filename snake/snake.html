@@ -60,7 +60,6 @@
                     createWorld(){
                         for ( var i = 0 ; i <= this.row ; i++ ){
                             for ( var j = 0 ; j <= this.column ; j++){
-                                console.log("2");
                                 this.createField( i , j ); 
                                 //this.drawNumber( i , j); //check generate block
                             }
@@ -69,12 +68,15 @@
                     draw(){
                         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);    
                         this.createWorld();
+                        this.snake.drawSnake();
                         this.fruit.drawFruit();
                     }
                 }
 
                 class Snake{
                     constructor(grid){
+                        this.canvas = document.getElementById('myCanvas');
+                        this.ctx = this.canvas.getContext("2d");
                         this.body = [[0,0],[0,1],[0,2]]; // starting point
                         this.direction = 'right'; //can be up,down,left,right
                         this.gridSize = grid ;
@@ -98,13 +100,18 @@
                         }
                     }
                     drawSnake(){
+                        var pos;
+                        for (pos of this.body){
+                            console.log(pos);
+                            this.drawSnakeApart(pos[0],pos[1])
+                        }
                         //drawAllSnake
                         //drawSnakeApart( x , y )
                     }
                     drawSnakeApart( x , y ){
                         this.ctx.beginPath();
                         this.ctx.rect(x*this.gridSize , y*this.gridSize ,this.gridSize,this.gridSize);
-                        this.ctx.fillStyle = "#ffffff";
+                        this.ctx.fillStyle = "#111111";
                         this.ctx.fill();
                         this.ctx.stroke();
                         this.ctx.closePath();
