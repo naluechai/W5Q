@@ -70,6 +70,7 @@
                         this.createWorld();
                         this.snake.drawSnake();
                         this.fruit.drawFruit();
+                        this.snake.move();
                     }
                 }
 
@@ -82,9 +83,22 @@
                         this.gridSize = grid ;
                     }
 
-                    move(x,y){
+                    move(){
+                        var head_arr = this.body.length;
+                        var head_pos = this.body[head_arr-1]
+                        var x = head_pos[0];
+                        var y = head_pos[1];
+                        if (this.direction == 'up'){
+                            y -= 1;
+                        }else if(this.direction == 'down'){
+                            y += 1;
+                        }else if(this.direction == 'left'){
+                            x -= 1;
+                        }else{
+                            x += 1;
+                        }
                         this.body.shift(); //remove the old tail position
-                        this.body.push((x,y)); //move the head to new (x,y)
+                        this.body.push([x,y]); //move the head to new (x,y)
                     }
 
                     // when eat a fruit the tail will remain in the same position and move only the head
@@ -102,11 +116,9 @@
                     drawSnake(){
                         var pos;
                         for (pos of this.body){
-                            console.log(pos);
                             this.drawSnakeApart(pos[0],pos[1])
                         }
-                        //drawAllSnake
-                        //drawSnakeApart( x , y )
+
                     }
                     drawSnakeApart( x , y ){
                         this.ctx.beginPath();
