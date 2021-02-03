@@ -131,9 +131,10 @@
                     // when eat a fruit the tail will remain in the same position and move only the head
                     move(){
                         this.mv();
-                        this.border_check()
+                        this.border_check();
                         this.body.shift(); //remove the old tail position
                         this.body.push(this.head); //move the head to new (x,y)
+                        this.self_coalition_check();
                     }
 
                     eat_fruit(){
@@ -142,8 +143,11 @@
                     }
 
                     //if the new position was in body will get a gameover massage
-                    self_coalition_check(x,y){
-                        if (this.body.include([x,y])){
+                    self_coalition_check(){
+                        for(var i = 0 ; i < this.body ; i++){
+                            if( this.body[i][0] == this.head[0] && this.body[i][1] == this.head[1] ){
+                                this.gameover();
+                            }
                             //gameover method in here
                         }
                     }
