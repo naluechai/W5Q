@@ -21,7 +21,7 @@
                         this.column = this.canvas.width / this.gridSize ; //13
                         this.row = this.canvas.height / this.gridSize ; //13
 
-                        var snake = new Snake( this.gridSize);
+                        var snake = new Snake( this.gridSize,this.row,this.column);
                         this.snake = snake ;
                         var fruit = new Fruit( Math.floor(Math.random() * this.column)  , ( Math.floor(Math.random() * this.row) ), this.gridSize , this.snake.body); // random fruit first time 
                         this.fruit = fruit ; 
@@ -68,7 +68,7 @@
                 }
 
                 class Snake{
-                    constructor(grid){
+                    constructor(grid,row,col){
                         this.canvas = document.getElementById('myCanvas');
                         this.ctx = this.canvas.getContext("2d");
                         this.body = [[0,0],[1,0],[2,0]]; // starting point
@@ -76,7 +76,20 @@
                         this.gridSize = grid ;
                         var head_pos = this.body.length;
                         this.head = this.body[head_pos-1];
+                        this.row = row-1;
+                        this.col = col-1;
+                        console.log('row:',this.row , 'col:' ,this.col)
 
+                    }
+                    gameover(){
+                        document.location.reload();
+                        alert('you lose')
+                    }
+
+                    border_check(){
+                        if (this.head[0] < 0 || this.head[0] > this.col || this.head[1] < 0 || this.head[1] > this.row){
+                            this.gameover()
+                        }
                     }
 
                     move(){
@@ -96,6 +109,7 @@
 
                         }
                         this.head = [x,y];
+                        this.border_check()
                         this.body.shift(); //remove the old tail position
                         this.body.push(this.head); //move the head to new (x,y)
                     }
