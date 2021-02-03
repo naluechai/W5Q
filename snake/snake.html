@@ -144,7 +144,7 @@
 
                     //if the new position was in body will get a gameover massage
                     self_coalition_check(){
-                        for(var i = 0 ; i < this.body ; i++){
+                        for(var i = 0 ; i < this.body.length-1 ; i++){
                             if( this.body[i][0] == this.head[0] && this.body[i][1] == this.head[1] ){
                                 this.gameover();
                             }
@@ -152,13 +152,11 @@
                         }
                     }
                     drawSnake(){
-                        var pos;
-                        for (pos of this.body){
+                        for (var pos of this.body){
                             this.drawSnakeApart(pos[0],pos[1])
                         }
-
                     }
-                    drawSnakeApart( x , y ){
+                    drawSnakeApart( x , y){
                         this.ctx.beginPath();
                         this.ctx.rect(x*this.gridSize , y*this.gridSize ,this.gridSize,this.gridSize);
                         this.ctx.fillStyle = "#111111";
@@ -192,8 +190,8 @@
                         var random = true;
                         //console.log(body)
                         while (random){
-                            this.x = Math.floor(Math.random() * (this.col+1));
-                            this.y = Math.floor(Math.random() * (this.row+1));
+                            this.x = Math.floor(Math.random() * (this.col));
+                            this.y = Math.floor(Math.random() * (this.row));
                             random = false;
                             for(var pos of body){
                                 if( pos[0] == this.x && pos[1] == this.y ){
