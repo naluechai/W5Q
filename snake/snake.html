@@ -62,6 +62,7 @@
                         }else{
                             this.snake.move();
                         }
+                        this.snake.current_direction = this.snake.direction;
                         this.createWorld();
                         this.fruit.drawFruit();
                         this.snake.drawSnake();
@@ -79,6 +80,7 @@
                         this.head = this.body[head_pos-1];
                         this.row = row-1;
                         this.col = col-1;
+                        this.current_direction = this.direction;
                         //console.log('row:',this.row , 'col:' ,this.col)
 
                     }
@@ -118,15 +120,15 @@
                     }
                     
                     turnRight(){
-                        this.direction = 'right';
+                        this.direction = 'right' ;
                     }
 
                     turnDown(){
-                        this.direction = 'down';
+                        this.direction = 'down' ;
                     }
                     
                     turnUp(){
-                        this.direction ='up' ;
+                        this.direction = 'up' ;
                     }
                     // when eat a fruit the tail will remain in the same position and move only the head
                     move(){
@@ -156,7 +158,7 @@
                             this.drawSnakeApart(pos[0],pos[1])
                         }
                     }
-                    drawSnakeApart( x , y){
+                    drawSnakeApart( x , y ){
                         this.ctx.beginPath();
                         this.ctx.rect(x*this.gridSize , y*this.gridSize ,this.gridSize,this.gridSize);
                         this.ctx.fillStyle = "#111111";
@@ -229,20 +231,30 @@
                     checkInput(e){
                         if (e.key == "ArrowRight") { 
                             //console.log("R");
-                            game.snake.turnRight();
+                            if (game.snake.current_direction != 'left'){
+                                game.snake.turnRight();
+                            }
                         }
                         
                         else if (e.key == "ArrowLeft") {
                             //console.log("L");
-                            game.snake.turnLeft();
+                            if (game.snake.current_direction != 'right'){
+                                game.snake.turnLeft();
                             }
+                        }
+
                         else if (e.key == "ArrowUp"){
                             //console.log("U");
-                            game.snake.turnUp();
+                            if (game.snake.current_direction != 'down'){
+                                game.snake.turnUp();
+                            }
                         }
+
                         else if (e.key == "ArrowDown"){
                             //console.log("D");
-                            game.snake.turnDown();
+                            if (game.snake.current_direction != 'up'){
+                                game.snake.turnDown();
+                            }
                         }
                    }
                 }
