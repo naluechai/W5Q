@@ -57,9 +57,10 @@
                     }
                     draw(){
                         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);    
-                        this.snake.move();
                         if (this.fruit.eat_check(this.snake.head,this.snake.body)){
                             this.snake.eat_fruit();
+                        }else{
+                            this.snake.move();
                         }
                         this.createWorld();
                         this.fruit.drawFruit();
@@ -78,7 +79,7 @@
                         this.head = this.body[head_pos-1];
                         this.row = row-1;
                         this.col = col-1;
-                        console.log('row:',this.row , 'col:' ,this.col)
+                        //console.log('row:',this.row , 'col:' ,this.col)
 
                     }
                     gameover(){
@@ -92,7 +93,7 @@
                         }
                     }
 
-                    move(){
+                    mv(){
                         var x = this.head[0];
                         var y = this.head[1];
                         if (this.direction == 'up'){
@@ -109,15 +110,13 @@
 
                         }
                         this.head = [x,y];
-                        this.border_check()
-                        this.body.shift(); //remove the old tail position
-                        this.body.push(this.head); //move the head to new (x,y)
                     }
 
+                    
                     turnLeft(){
                         this.direction = 'left' ;
                     }
-
+                    
                     turnRight(){
                         this.direction = 'right';
                     }
@@ -125,14 +124,21 @@
                     turnDown(){
                         this.direction = 'down';
                     }
-
+                    
                     turnUp(){
                         this.direction ='up' ;
                     }
                     // when eat a fruit the tail will remain in the same position and move only the head
+                    move(){
+                        this.mv();
+                        this.border_check()
+                        this.body.shift(); //remove the old tail position
+                        this.body.push(this.head); //move the head to new (x,y)
+                    }
+
                     eat_fruit(){
+                        this.mv();
                         this.body.push(this.head);
-                        this.fruit.new_fruit()
                     }
 
                     //if the new position was in body will get a gameover massage
@@ -199,15 +205,15 @@
                                 random = true;
                             }
                             */
-                            
                         }
-                        return true;
                     }
 
                     eat_check(head,body){
                         if (this.x == head[0] && this.y == head[1]){
                             this.new_fruit(body);
-                        }
+                            return true;
+                        }return false;
+
                     }
 
                 }
