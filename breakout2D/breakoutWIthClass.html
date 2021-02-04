@@ -12,12 +12,25 @@
     <canvas id="myCanvas" width="480" height="320"></canvas>
         <script>
           //Class การทำงานของเกม
-            class Main{
+          class Main{
                 constructor(){
                     this.canvas = document.getElementById("myCanvas");
-                    this.ctx = this.canvas.getContext("2d");  
-                    var obj_Ball = new Ball( this.canvas.width/2 , this.canvas.height-30 , 2 , -2 ,10);
-                    this.ball = obj_Ball ;
+                    this.ctx = this.canvas.getContext("2d"); 
+                    this.ball_count = 2;
+                    this.b = [];
+                    for(var i = 0; i < this.ball_count ; i++){
+                        var temp = new Ball( this.canvas.width/2 , this.canvas.height-30 , (-1)*(Math.floor(Math.random()*2))*Math.floor(Math.random()*3) , -2 ,10 );
+                        this.b.push(temp);
+                    }
+
+                    /*
+                    var obj_Ball_1 = new Ball( this.canvas.width/2 , this.canvas.height-30 , 2 , -2 ,10 );
+                    this.ball_1 = obj_Ball_1 ;
+                    var obj_Ball_2 = new Ball( this.canvas.width/2 , this.canvas.height-30 , -2 , -2 ,10 );
+                    this.ball_2 = obj_Ball_2;
+                    */
+                    
+                    
                     var obj_Paddle = new Paddle();
                     this.paddle = obj_Paddle;
                     var input= new InputProcessor();
@@ -41,8 +54,16 @@
                     }
 
                     this.paddle.bricks = this.bricks; // ส่ง object birck ให้ paddle
-                    this.ball.game = this; // ส่ง object main ให้ ball
-                    this.ball.paddle = this.paddle; // ส่ง object paddle ให้ ball
+                    for (var i = 0 ; i < this.ball_count ; i++){
+                        this.b[i].game = this;
+                        this.b[i].paddle = this.paddle;
+                    }
+                    /*
+                    this.ball_1.game = this;
+                    this.ball_2.game = this; // ส่ง object main ให้ ball
+                    this.ball_1.paddle = this.paddle; // ส่ง object paddle ให้ ball
+                    this.ball_2.paddle = this.paddle;
+                    */
                     this.paddle.ip = this.ip;  // ส่ง object InputProcessor ให้ paddle
                     this.ip.paddle = this.paddle;  // ส่ง object paddle ให้  InputProcessor
                 }
@@ -66,14 +87,29 @@
                 }
                 //ใช้ในการเริ่มเกม
                 draw(){   
-                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);        
-                    this.ball.drawBall() ;
-                    this.ball.moveBall() ;
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    for (var i = 0 ; i < this.ball_count ; i++){
+                        this.b[i].drawBall();
+                        this.b[i].moveBall();
+                    }
+                    /*
+                    this.ball_1.drawBall() ;
+                    this.ball_1.moveBall() ;
+                    this.ball_2.drawBall();
+                    this.ball_2.moveBall();
+                    */
                     this.paddle.drawPaddle();
                     this.paddle.drawScore();
                     this.paddle.drawLives();
                     this.drawBricks();
-                    this.ball.collisionDetection()
+                    
+                    for (var i = 0 ; i < this.ball_count ; i++){
+                        this.b[i].collisionDetection();
+                    }
+                    /*
+                    this.ball_1.collisionDetection();
+                    this.ball_2.collisionDetection();
+                    */
                 }
             }
             //Class เก็บข้อมูลลูกบอล ทิศทาง ขนาด ความเร็ว
