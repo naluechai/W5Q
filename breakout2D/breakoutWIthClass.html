@@ -57,7 +57,7 @@
                         this.bricks[c][r].y = brickY;
                         this.ctx.beginPath();
                         this.ctx.rect(brickX, brickY, this.brickWidth, this.brickHeight);
-                        this.ctx.fillStyle = "#0095DD";
+                        this.ctx.fillStyle = "#7700ff";
                         this.ctx.fill();
                         this.ctx.closePath();
                       }
@@ -91,7 +91,7 @@
                 drawBall(){
                     this.ctx.beginPath();
                     this.ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI*2);
-                    this.ctx.fillStyle = "#0095DD";
+                    this.ctx.fillStyle = "#ff8800";
                     this.ctx.fill();
                     this.ctx.closePath();
                 }
@@ -182,7 +182,7 @@
                 drawPaddle() {
                     this.ctx.beginPath();
                     this.ctx.rect(this.padX, this.canvas.height-this.paddH, this.paddW, this.paddH);
-                    this.ctx.fillStyle = "#0095DD";
+                    this.ctx.fillStyle = "#00eeff";
                     this.ctx.fill();
                     this.ctx.closePath();
                 }
