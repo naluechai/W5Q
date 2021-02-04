@@ -155,10 +155,14 @@
                     }
                     drawSnake(){
                         for (var pos of this.body){
-                            this.drawSnakeApart(pos[0],pos[1])
+                            if ( pos == this.head ){
+                                this.drawSnakeHead(this.head[0], this.head[1])
+                            }else{
+                                this.drawSnakeApart(pos[0],pos[1])
+                            }
                         }
-                        this.drawSnakeHead(this.head[0], this.head[1])
                     }
+                    
                     drawSnakeApart( x , y ){
                         this.ctx.beginPath();
                         this.ctx.rect(x*this.gridSize , y*this.gridSize ,this.gridSize,this.gridSize);
